@@ -11,6 +11,13 @@ class Question(models.Model):
     option_c = models.CharField(max_length=50)
     option_d = models.CharField(max_length=50)
 
+    def __str__(self):
+        return self.question_text
+
+    class Meta:
+        verbose_name = 'Вопрос'
+        verbose_name_plural = 'Вопросы'
+
 
 class Test(models.Model):
     question = models.ManyToManyField(Question)
@@ -20,6 +27,13 @@ class Test(models.Model):
     is_active = models.BooleanField()
     admin_comment = models.CharField(max_length=255)
 
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'Тест'
+        verbose_name_plural = 'Тесты'
+
 
 class Poll(models.Model):
     test = models.ManyToManyField(Test)
@@ -28,3 +42,10 @@ class Poll(models.Model):
     overview = models.TextField(max_length=2000)
     is_active = models.BooleanField()
     admin_comment = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'Опрос'
+        verbose_name_plural = 'Опросы'
