@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Создать тест
+{% endblock %}
+
+{% block body %}
+    <form method="POST" action="">
+        {% csrf_token %}
+
+        <p>Название теста</p>
+        <p>{{ form.title }}</p>
+        <p>Описание</p>
+        <p>{{ form.overview }}</p>
+        <p>Активировать {{ form.is_active }}</p>
+
+        <input name="Create test" type="submit" value="Создать">
+    </form>
+{% endblock %}

@@ -1,0 +1,12 @@
+{
+    "sqltools.connections": [
+        {
+            "database": "${workspaceFolder:polls_project}/db.sqlite3",
+            "driver": "SQLite",
+            "name": "polls project",
+            "previewLimit": 50
+        }
+    ],
+    "sqltools.useNodeRuntime": true,
+    "python.pythonPath": "/Users/traffox/.local/share/virtualenvs/polls_project-ZGBLIMVC/bin/python"
+}

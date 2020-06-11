@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Update page
+{% endblock %}
+
+{% block body %}
+    <form method="POST" action="/">
+        {% csrf_token %}
+
+        <p>Название теста</p>
+        <p>{{ form.title }}</p>
+        <p>Описание</p>
+        <p>1 {{ form.overview }}</p>
+
+        <input name="Update question" type="submit">
+    </form>
+{% endblock %}

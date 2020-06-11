@@ -1,7 +1,13 @@
 from django.forms import ModelForm
-from polls.models import Question
+from polls.models import Test, Question
 
-class CreateQuestion(ModelForm):
+class CreateTestForm(ModelForm):
+    class Meta:
+        model = Test
+        fields = ['title', 'overview', 'is_active']
+
+
+class CreateQuestionForm(ModelForm):
     class Meta:
         model = Question
-        fields = ['question_text', 'option_a', 'option_b', 'option_c', 'option_d']
+        fields = '__all__'
