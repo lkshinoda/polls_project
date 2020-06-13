@@ -21,6 +21,9 @@ class Question(models.Model):
     option_c = models.CharField(max_length=50)
     option_d = models.CharField(max_length=50)
 
+    def get_absolute_url(self):
+        return reverse('detail_question', kwargs={'pk': self.id})
+
     def __str__(self):
         return self.question_text
 
@@ -30,7 +33,7 @@ class Question(models.Model):
 
 
 class Test(models.Model):
-    question = models.ManyToManyField(Question)
+    question = models.ManyToManyField(Question, related_name='tests')
     title = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255)  # default length = 50
     overview = models.TextField(max_length=2000)
@@ -54,7 +57,7 @@ class Test(models.Model):
 
 
 class Poll(models.Model):
-    test = models.ManyToManyField(Test)
+    test = models.ManyToManyField(Test, related_name='polls')
     title = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255, unique=True)
     overview = models.TextField(max_length=2000)

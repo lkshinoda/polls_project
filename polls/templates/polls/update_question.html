@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Изменение вопроса
+{% endblock %}
+
+{% block body %}
+    <form method="POST" action="">
+        {% csrf_token %}
+
+        <p>Вопрос</p>
+        <p>{{ form.question_text }}</p>
+        <p>Варианты ответа:</p>
+        <p>{{ form.option_a }}</p>
+        <p>{{ form.option_b }}</p>
+        <p>{{ form.option_c }}</p>
+        <p>{{ form.option_d }}</p>
+
+        <input name="Create test" type="submit" value="Изменить">
+    </form>
+{% endblock %}

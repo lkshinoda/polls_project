@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Редактирование вопроса
+{% endblock %}
+
+{% block nav_bar_menu %}
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'create_question' %}">Создать вопрос</a>
+    </li>
+{% endblock %}
+
+{% block body %}
+    <div> {{ object.question_text }} </div>
+    <br>
+    <div>
+        <p>{{ object.option_a }}</p>
+        <p>{{ object.option_b }}</p>
+        <p>{{ object.option_c }}</p>
+        <p>{{ object.option_d }}</p>
+    </div>
+
+    <br>
+    <br>
+
+    <a class="btn btn-outline-primary" href="{% url 'update_question' pk=object.id %}" role="button">Изменить</a>
+    <a class="btn btn-outline-danger" href="{% url 'delete_question' pk=object.id %}" role="button">Удалить</a>
+
+{% endblock %}

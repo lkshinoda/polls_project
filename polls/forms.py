@@ -7,7 +7,12 @@ class CreateTestForm(ModelForm):
         fields = ['title', 'overview']
 
 
+
+
 class CreateQuestionForm(ModelForm):
+
+
     class Meta:
         model = Question
-        fields = '__all__'
+        fields = ['question_text', 'option_a', 'option_b', 'option_c', 'option_d']
+

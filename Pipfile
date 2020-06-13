@@ -9,6 +9,7 @@ verify_ssl = true
 transliterate = "*"
 pytils = "*"
 django = "*"
+ipython = "*"
 
 [requires]
 python_version = "3.8"
