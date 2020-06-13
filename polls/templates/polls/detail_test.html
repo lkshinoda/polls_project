@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Test detail
+{% endblock %}
+
+{% block body %}
+    <div> {{ test.title }} </div>
+    <br>
+    <div>{{ test.overview }}</div>
+
+    <br>
+    <br>
+
+    <a class="btn btn-outline-primary" href="{% url 'update_test' slug=test.slug %}" role="button">Изменить</a>
+    <a class="btn btn-outline-danger" href="{% url 'delete_test' slug=test.slug %}" role="button">Удалить</a>
+
+{% endblock %}

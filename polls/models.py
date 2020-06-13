@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.text import slugify
 import time
 from pytils import translit
+from django.urls import reverse
 
 
 def gen_slug(s):    # генерация уникального slug в формате: translit title + unix time
@@ -35,6 +36,9 @@ class Test(models.Model):
     overview = models.TextField(max_length=2000)
     is_active = models.BooleanField(default=True)
     admin_comment = models.CharField(max_length=255)
+
+    def get_absolute_url(self):
+        return reverse('detail_test', kwargs={'slug': self.slug})
 
     def save(self, *args, **kwargs): # переопределение метода save для генерации slug только при создании теста
         if not self.slug:

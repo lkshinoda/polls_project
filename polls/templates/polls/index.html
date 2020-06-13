@@ -6,8 +6,8 @@
 
 {% block body %}
 
-    {% for test in tests %}
-        <p><a href="{% url 'test' slug=test.slug %}">{{ test }}</a></p>
+    {% for test in object_list %}
+        <p><a href="{% url 'detail_test' slug=test.slug %}">{{ test.title }}</a></p>
     {% endfor %}
 
 {% endblock %}

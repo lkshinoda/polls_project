@@ -1,10 +1,17 @@
 from django.urls import path
 from polls import views
+from polls.views import (
+    TestListView,
+    TestCreateView,
+    TestUpdateView,
+    TestDetailView,
+    TestDeleteView
+)
 
 urlpatterns = [
-    path('', views.indexpage, name='home'),
-    path('create_test/', views.create_test, name='create_test'),
-    path('test/<str:slug>/', views.test_view, name='test'),
-    path('test/<str:slug>/update/', views.update_test, name='update_test'),
-    path('test/<str:slug>/delete/', views.delete_test, name='delete'),
+    path('', TestListView.as_view(), name='home'),
+    path('create_test/', TestCreateView.as_view(), name='create_test'),
+    path('test/<str:slug>/', TestDetailView.as_view(), name='detail_test'),
+    path('test/<str:slug>/update/', TestUpdateView.as_view(), name='update_test'),
+    path('test/<str:slug>/delete/', TestDeleteView.as_view(), name='delete_test'),
 ]

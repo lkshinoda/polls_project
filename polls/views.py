@@ -1,45 +1,32 @@
-from django.shortcuts import render, redirect
 from polls.forms import CreateTestForm
 from polls.models import Question, Poll, Test
-from django.urls import reverse
+from django.views.generic import ListView, DetailView, DeleteView, CreateView, UpdateView
 
 
-def indexpage(request):
-    tests = Test.objects.all()
-    context = {'tests': tests}
-    return render(request, 'polls/index.html', context)
+
+class TestListView(ListView):
+    model = Test
+    template_name = 'polls/index.html'
 
 
-def create_test(request):
-    form = CreateTestForm()
-    if request.method == 'POST':
-        form = CreateTestForm(request.POST)
-        if form.is_valid():
-            form.save()
-        return redirect('/')
-
-    context = {'form': form}
-    return render(request, 'polls/create_test.html', context)
+class TestDetailView(DetailView):
+    model = Test
+    template_name = 'polls/detail_test.html'
 
 
-def update_test(request, slug):
-    test = Test.objects.get(slug__iexact=slug)
-    form = CreateTestForm(instance=test)
-    if request.method == 'POST':
-        form = CreateTestForm(request.POST)
-        if form.is_valid():
-            form.save()
-        return redirect('/')
+class TestCreateView(CreateView):
+    form_class = CreateTestForm
+    template_name = 'polls/create_test.html'
 
-    context = {'form': form}
-    return render(request, 'polls/update_test.html', context)
 
-def test_view(request, slug):
-    test = Test.objects.get(slug__iexact=slug)
-    context = {'test': test}
-    return render(request, 'polls/test.html', context)
+class TestUpdateView(UpdateView):
+    model = Test
+    form_class = CreateTestForm
+    template_name = 'polls/update_test.html'
+    #TODO add a form verify
 
-def delete_test(request, slug):
-    test = Test.objects.get(slug__iexact=slug)
-    test.delete()
-    return redirect(reversed('home'))
+
+class TestDeleteView(DeleteView):
+    model = Test
+    template_name = 'polls/delete_test.html'
+    success_url = '/'
