@@ -1,18 +1,18 @@
 {% extends "base.html" %}
 
 {% block title %}
-    Update page
+    Создать тест
 {% endblock %}
 
 {% block body %}
-    <form method="POST" action="/">
+    <form method="POST" action=" {% url 'update_test' slug=test.slug %}">
         {% csrf_token %}
 
         <p>Название теста</p>
         <p>{{ form.title }}</p>
         <p>Описание</p>
-        <p>1 {{ form.overview }}</p>
+        <p>{{ form.overview }}</p>
 
-        <input name="Update question" type="submit">
+        <input name="Create test" type="submit" value="Обновить">
     </form>
 {% endblock %}

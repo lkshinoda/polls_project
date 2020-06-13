@@ -13,7 +13,7 @@ def gen_slug(s):    # генерация уникального slug в форм
 class Question(models.Model):
     question_text = models.TextField(max_length=2000)
     true_answer = models.CharField(max_length=255)
-    is_active = models.BooleanField()
+    is_active = models.BooleanField(default=True)
     admin_comment = models.CharField(max_length=255)
     option_a = models.CharField(max_length=50)
     option_b = models.CharField(max_length=50)
@@ -33,7 +33,7 @@ class Test(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255)  # default length = 50
     overview = models.TextField(max_length=2000)
-    is_active = models.BooleanField()
+    is_active = models.BooleanField(default=True)
     admin_comment = models.CharField(max_length=255)
 
     def save(self, *args, **kwargs): # переопределение метода save для генерации slug только при создании теста

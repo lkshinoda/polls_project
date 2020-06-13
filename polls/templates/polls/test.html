@@ -5,7 +5,12 @@
 {% endblock %}
 
 {% block body %}
-    <div>Test detail</div>
+    <div> {{ test.title }} </div>
     <br>
+    <div>{{ test.overview }}</div>
+
+    <br>
+    <br>
+    <a href="{% url 'update_test' slug=test.slug %}">Изменить</a>
 
 {% endblock %}
