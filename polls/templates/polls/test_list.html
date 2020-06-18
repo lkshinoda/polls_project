@@ -15,7 +15,7 @@
     <div>
 
         {% for object in object_list %}
-            <p><a href="{% url 'detail_test' pk=object.id %}">{{ object.question_text }}</a></p>
+            <p><a href="{% url 'detail_test' slug=object.slug %}">{{ object.title }}</a></p>
         {% endfor %}
 
     </div>

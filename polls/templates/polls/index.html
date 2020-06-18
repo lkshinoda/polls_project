@@ -44,5 +44,7 @@
     {% for object in object_list %}
         <p><a href="{% url 'detail_poll' slug=object.slug %}">{{ object.title }}</a></p>
     {% endfor %}
+    <br>
+    <p>{% lorem 4 p random %}</p>
 
 {% endblock %}
