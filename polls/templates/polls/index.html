@@ -4,10 +4,45 @@
     Главная
 {% endblock %}
 
+{% block nav_bar_menu %}
+
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Опросы
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{% url 'list_poll' %}">Список опросов</a>
+            <a class="dropdown-item" href="{% url 'create_poll' %}">Создать опрос</a>
+        </div>
+    </li>
+
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Тесты
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{% url 'test_list' %}">Список тестов</a>
+            <a class="dropdown-item" href="{% url 'create_test' %}">Создать тест</a>
+        </div>
+
+    </li>
+
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Вопросы
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{% url 'list_question' %}">Все вопросы</a>
+            <a class="dropdown-item" href="{% url 'create_question' %}">Создать вопрос</a>
+        </div>
+    </li>
+
+{% endblock %}
+
 {% block body %}
 
-    {% for test in object_list %}
-        <p><a href="{% url 'detail_test' slug=test.slug %}">{{ test.title }}</a></p>
+    {% for object in object_list %}
+        <p><a href="{% url 'detail_poll' slug=object.slug %}">{{ object.title }}</a></p>
     {% endfor %}
 
 {% endblock %}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Доступные опросы
+{% endblock %}
+
+{% block nav_bar_menu %}
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'create_poll' %}">Создать poll</a>
+    </li>
+{% endblock %}
+
+{% block body %}
+
+    <div>
+
+        {% for object in object_list %}
+            <p><a href="{% url 'detail_poll' slug=object.slug %}">{{ object.title }}</a></p>
+        {% endfor %}
+
+    </div>
+
+{% endblock %}

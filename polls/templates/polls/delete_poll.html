@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Удаление опроса {{ object.title }}
+{% endblock %}
+
+{% block body %}
+
+    <form action="." method="POST">{% csrf_token %}
+    <h3>Вы точно хотите удалить опрос <br> "{{ object.title }}"?</h3>
+
+        <br>
+        <br>
+        <a class="btn btn-outline-primary" href="{{ object.get_absolute_url }}" role="button">Оставить</a>
+        <input class="btn btn-outline-danger" type="submit" value="Удалить">
+
+    </form>
+
+{% endblock %}

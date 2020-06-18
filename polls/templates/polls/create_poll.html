@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Создать poll
+{% endblock %}
+
+{% block body %}
+    <form method="POST" action="">
+        {% csrf_token %}
+
+        <p>Название опроса</p>
+        <p>{{ form.title }}</p>
+        <p>Описание</p>
+        <p>{{ form.overview }}</p>
+
+        <button type="submit" class="btn btn-primary">Создать</button>
+    </form>
+{% endblock %}

@@ -1,6 +1,7 @@
 from django.urls import path
 from polls import views
 from polls.views import (
+    IndexPageView,
     TestListView,
     TestCreateView,
     TestUpdateView,
@@ -10,18 +11,31 @@ from polls.views import (
     QuestionListView,
     QuestionDetailView,
     QuestionUpdateView,
-    QuestionDeleteView
+    QuestionDeleteView,
+    RunTestView,
+    PollCreateView,
+    PollDetailView,
+    PollUpdateView,
+    PollDeleteView,
+    PollListView
 )
 
 urlpatterns = [
-    path('', TestListView.as_view(), name='home'),
+    path('', IndexPageView.as_view(), name='home'),
+    path('test/', TestListView.as_view(), name='test_list'),
     path('create_test/', TestCreateView.as_view(), name='create_test'),
     path('test/<str:slug>/', TestDetailView.as_view(), name='detail_test'),
     path('test/<str:slug>/update/', TestUpdateView.as_view(), name='update_test'),
     path('test/<str:slug>/delete/', TestDeleteView.as_view(), name='delete_test'),
+    path('test/<str:slug>/run/', RunTestView.as_view(), name='run_test'),
     path('create_question/', QuestionCreateView.as_view(), name='create_question'),
     path('question/', QuestionListView.as_view(), name='list_question'),
     path('detail_question/<int:pk>/', QuestionDetailView.as_view(), name='detail_question'),
     path('question/<int:pk>/update/', QuestionUpdateView.as_view(), name='update_question'),
     path('question/<int:pk>/delete/', QuestionDeleteView.as_view(), name='delete_question'),
+    path('poll/', PollListView.as_view(), name='list_poll'),
+    path('create_poll/', PollCreateView.as_view(), name='create_poll'),
+    path('poll/<str:slug>/', PollDetailView.as_view(), name='detail_poll'),
+    path('poll/<str:slug>/update/', PollUpdateView.as_view(), name='update_poll'),
+    path('poll/<str:slug>/delete/', PollDeleteView.as_view(), name='delete_poll'),
 ]

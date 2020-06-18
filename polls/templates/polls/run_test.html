@@ -23,14 +23,17 @@
     <br>
     {% for quest in test.question.all %}
 
-        <p>{{ quest.question_text }}
+        <div>
+            <p>{{ quest.question_text }}</p>
+            <p>{{ quest.option_a }}</p>
+            <p>{{ quest.option_b }}</p>
+            <p>{{ quest.option_c }}</p>
+            <p>{{ quest.option_d }}</p>
+
+        </div>
+        <br>
+        <br>
 
     {% endfor %}
-    <br>
-    <br>
-    <a class="btn btn-outline-primary" href="{% url 'run_test' slug=test.slug %}" role="button">Пройти тест</a>
-
-    <a class="btn btn-outline-primary" href="{% url 'update_test' slug=test.slug %}" role="button">Изменить</a>
-    <a class="btn btn-outline-danger" href="{% url 'delete_test' slug=test.slug %}" role="button">Удалить</a>
 
 {% endblock %}

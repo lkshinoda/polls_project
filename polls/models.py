@@ -61,8 +61,11 @@ class Poll(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255, unique=True)
     overview = models.TextField(max_length=2000)
-    is_active = models.BooleanField()
+    is_active = models.BooleanField(default=True)
     admin_comment = models.CharField(max_length=255)
+
+    def get_absolute_url(self):
+        return reverse('detail_poll', kwargs={'slug': self.slug})
 
     def save(self, *args, **kwargs): # переопределение метода save для генерации slug при создании опроса
         if not self.slug:

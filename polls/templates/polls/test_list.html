@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Доступные тесты
+{% endblock %}
+
+{% block nav_bar_menu %}
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'create_test' %}">Создать тест</a>
+    </li>
+{% endblock %}
+
+{% block body %}
+
+    <div>
+
+        {% for object in object_list %}
+            <p><a href="{% url 'detail_test' pk=object.id %}">{{ object.question_text }}</a></p>
+        {% endfor %}
+
+    </div>
+
+{% endblock %}

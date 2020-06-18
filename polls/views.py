@@ -1,13 +1,17 @@
-from polls.forms import CreateTestForm, CreateQuestionForm
+from polls.forms import CreateTestForm, CreateQuestionForm, CreatePollForm
 from polls.models import Question, Poll, Test
 from django.views.generic import ListView, DetailView, DeleteView, CreateView, UpdateView
 
+
+class IndexPageView(ListView):
+    model = Poll
+    template_name = 'polls/index.html'
 
 """ Test """
 
 class TestListView(ListView):
     model = Test
-    template_name = 'polls/index.html'
+    template_name = 'polls/test_list.html'
 
 
 class TestDetailView(DetailView):
@@ -39,6 +43,7 @@ class QuestionListView(ListView):
     model = Question
     template_name = 'polls/question_list.html'
 
+
 class QuestionCreateView(CreateView):
     form_class = CreateQuestionForm
     template_name = 'polls/create_question.html'
@@ -61,3 +66,33 @@ class QuestionDeleteView(DeleteView):
     success_url = '/question/'
 
 """ Poll """
+
+class PollCreateView(CreateView):
+    form_class = CreatePollForm
+    template_name = 'polls/create_poll.html'
+
+
+class PollListView(ListView):
+    model = Poll
+    template_name = 'polls/poll_list.html'
+
+
+class PollDetailView(DetailView):
+    model = Poll
+    template_name = 'polls/detail_poll.html'
+
+
+class PollUpdateView(UpdateView):
+    model = Poll
+    form_class = CreatePollForm
+    template_name = 'polls/update_poll.html'
+
+
+class PollDeleteView(DeleteView):
+    model = Poll
+    template_name = 'polls/delete_poll.html'
+    success_url = '/poll/'
+
+class RunTestView(DetailView):
+    model = Test
+    template_name = 'polls/run_test.html'
