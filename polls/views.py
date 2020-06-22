@@ -28,7 +28,6 @@ class TestUpdateView(UpdateView):
     model = Test
     form_class = CreateTestForm
     template_name = 'polls/update_test.html'
-    #TODO add a form verify
 
 
 class TestDeleteView(DeleteView):

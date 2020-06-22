@@ -20,6 +20,7 @@ from polls.views import (
     PollListView
 )
 
+app_name = 'polls'
 urlpatterns = [
     path('', IndexPageView.as_view(), name='home'),
     path('test/', TestListView.as_view(), name='test_list'),

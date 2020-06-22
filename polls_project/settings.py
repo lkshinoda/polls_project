@@ -22,7 +22,6 @@ SECRET_KEY = key.SECRET_KEY
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
