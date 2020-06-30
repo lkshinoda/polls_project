@@ -21,13 +21,7 @@
 
     <br>
     <br>
-    {% for quest in test.question.all %}
 
-        <p>{{ quest.question_text }}
-
-    {% endfor %}
-    <br>
-    <br>
     <a class="btn btn-primary" href="{% url 'run_test' slug=test.slug %}" role="button">Пройти тест</a>
 
     <a class="btn btn-outline-primary" href="{% url 'update_test' slug=test.slug %}" role="button">Изменить</a>

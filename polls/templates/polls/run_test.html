@@ -5,13 +5,7 @@
 {% endblock %}
 
 {% block nav_bar_menu %}
-    <li class="nav-item">
-        <a class="nav-link" href="{% url 'create_question' %}">Создать вопрос</a>
-    </li>
 
-    <li class="nav-item">
-        <a class="nav-link" href="{% url 'list_question' %}">Все вопросы</a>
-    </li>
 {% endblock %}
 
 {% block body %}
@@ -71,6 +65,8 @@
 
                     </div>
                 </div>
+
+            <br>
 
         {% endfor %}
 
