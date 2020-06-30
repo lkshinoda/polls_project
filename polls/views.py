@@ -1,6 +1,8 @@
 from polls.forms import CreateTestForm, CreateQuestionForm, CreatePollForm
 from polls.models import Question, Poll, Test
-from django.views.generic import ListView, DetailView, DeleteView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, DeleteView, CreateView, UpdateView, View
+from django.shortcuts import get_object_or_404, render
+from django.core.paginator import Paginator
 
 
 class IndexPageView(ListView):
@@ -92,6 +94,21 @@ class PollDeleteView(DeleteView):
     template_name = 'polls/delete_poll.html'
     success_url = '/poll/'
 
+
 class RunTestView(DetailView):
     model = Test
     template_name = 'polls/run_test.html'
+
+
+
+def question_list(request):
+    question = Test.question.all()
+    test = Test.objects.all()
+    paginator = Paginator(question, 1)
+    questions = paginator.get_page(1)
+    context = {'questions': questions.object_list, 'test': test}
+
+    return render(request, 'polls/run_test.html', context)
+
+def answer(request, question_id):
+    pass

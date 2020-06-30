@@ -10,11 +10,12 @@
 
         <p>Вопрос</p>
         <p>{{ form.question_text }}</p>
-        <p>Варианты ответа:</p>
+        <p>Верный ответ</p>
+        <p>{{ form.true_answer }}</p>
+        <p>Прочие варианты:</p>
         <p>{{ form.option_a }}</p>
         <p>{{ form.option_b }}</p>
         <p>{{ form.option_c }}</p>
-        <p>{{ form.option_d }}</p>
 
         <button type="submit" class="btn btn-primary">Создать</button>
     </form>

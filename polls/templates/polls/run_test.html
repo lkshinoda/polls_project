@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-    Test detail
+    Прохождение теста "{{ test.title }}"
 {% endblock %}
 
 {% block nav_bar_menu %}
@@ -15,25 +15,66 @@
 {% endblock %}
 
 {% block body %}
-    <div> {{ test.title }} </div>
-    <br>
-    <div>{{ test.overview }}</div>
 
-    <br>
-    <br>
-    {% for quest in test.question.all %}
 
-        <div>
-            <p>{{ quest.question_text }}</p>
-            <p>{{ quest.option_a }}</p>
-            <p>{{ quest.option_b }}</p>
-            <p>{{ quest.option_c }}</p>
-            <p>{{ quest.option_d }}</p>
+    <div class="card text-center">
+        <div class="card-header">
+            <h5 class="card-title">{{ test.title }}</h5>
+        </div>
+        <div class="card-body">
+
+            <p class="card-text">{{ test.overview }}</p>
 
         </div>
-        <br>
-        <br>
+        {% if test.admin_comment %}
+            <div class="card-footer text-muted">
+                {{ test.admin_comment }}
+            </div>
+        {% endif %}
+    </div>
 
-    {% endfor %}
+
+    <br>
+    <br>
+
+
+    <form action="{% url 'answer' id=test.id %}" method="post">{% csrf_token %}
+
+        {% for quest in test.question.all %}
+
+
+            <div class="card bg-light mb-3" style="max-width: 40rem;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ quest.question_text }}</h5>
+
+                        <p>
+                            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ quest.id }}">
+                            <label for="choice{{ forloop.counter }}">{{ quest.option_a }}</label><br>
+                        </p>
+
+                        <p>
+                            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ quest.id }}">
+                            <label for="choice{{ forloop.counter }}">{{ quest.option_b }}</label><br>
+                        </p>
+
+                        <p>
+                            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ quest.id }}">
+                            <label for="choice{{ forloop.counter }}">{{ quest.option_c }}</label><br>
+                        </p>
+
+                        <p>
+                            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ quest.id }}">
+                            <label for="choice{{ forloop.counter }}">{{ quest.true_answer }}</label><br>
+                        </p>
+
+                        <radio></radio>
+
+                    </div>
+                </div>
+
+        {% endfor %}
+
+    </form>
+    <button class="btn btn-primary" type="submit">Ответить</button>
 
 {% endblock %}

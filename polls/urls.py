@@ -20,7 +20,7 @@ from polls.views import (
     PollListView
 )
 
-app_name = 'polls'
+
 urlpatterns = [
     path('', IndexPageView.as_view(), name='home'),
     path('test/', TestListView.as_view(), name='test_list'),
@@ -29,6 +29,7 @@ urlpatterns = [
     path('test/<str:slug>/update/', TestUpdateView.as_view(), name='update_test'),
     path('test/<str:slug>/delete/', TestDeleteView.as_view(), name='delete_test'),
     path('test/<str:slug>/run/', RunTestView.as_view(), name='run_test'),
+    path('test/<int:id>/', views.answer, name='answer'),
     path('create_question/', QuestionCreateView.as_view(), name='create_question'),
     path('question/', QuestionListView.as_view(), name='list_question'),
     path('detail_question/<int:pk>/', QuestionDetailView.as_view(), name='detail_question'),
@@ -38,5 +39,5 @@ urlpatterns = [
     path('create_poll/', PollCreateView.as_view(), name='create_poll'),
     path('poll/<str:slug>/', PollDetailView.as_view(), name='detail_poll'),
     path('poll/<str:slug>/update/', PollUpdateView.as_view(), name='update_poll'),
-    path('poll/<str:slug>/delete/', PollDeleteView.as_view(), name='delete_poll'),
+    path('poll/<str:slug>/delete/', PollDeleteView.as_view(), name='delete_poll'),    
 ]

@@ -20,11 +20,11 @@ class CreateQuestionForm(ModelForm):
         self.fields['option_a'].widget.attrs.update({'class': 'form-control'})
         self.fields['option_b'].widget.attrs.update({'class': 'form-control'})
         self.fields['option_c'].widget.attrs.update({'class': 'form-control'})
-        self.fields['option_d'].widget.attrs.update({'class': 'form-control'})
+        self.fields['true_answer'].widget.attrs.update({'class': 'form-control'})
 
     class Meta:
         model = Question
-        fields = ['question_text', 'option_a', 'option_b', 'option_c', 'option_d']
+        fields = ['question_text', 'option_a', 'option_b', 'option_c', 'true_answer']
 
 
 class CreatePollForm(ModelForm):

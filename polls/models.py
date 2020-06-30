@@ -11,15 +11,16 @@ def gen_slug(s):    # генерация уникального slug в форм
     return (f'{new_slug}-{t}')
 
 
+
 class Question(models.Model):
     question_text = models.TextField(max_length=2000)
     true_answer = models.CharField(max_length=255)
-    is_active = models.BooleanField(default=True)
-    admin_comment = models.CharField(max_length=255)
     option_a = models.CharField(max_length=50)
     option_b = models.CharField(max_length=50)
     option_c = models.CharField(max_length=50)
-    option_d = models.CharField(max_length=50)
+    is_active = models.BooleanField(default=True)
+    admin_comment = models.CharField(max_length=255, blank=True)
+
 
     def get_absolute_url(self):
         return reverse('detail_question', kwargs={'pk': self.id})

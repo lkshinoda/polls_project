@@ -28,7 +28,7 @@
     {% endfor %}
     <br>
     <br>
-    <a class="btn btn-outline-primary" href="{% url 'run_test' slug=test.slug %}" role="button">Пройти тест</a>
+    <a class="btn btn-primary" href="{% url 'run_test' slug=test.slug %}" role="button">Пройти тест</a>
 
     <a class="btn btn-outline-primary" href="{% url 'update_test' slug=test.slug %}" role="button">Изменить</a>
     <a class="btn btn-outline-danger" href="{% url 'delete_test' slug=test.slug %}" role="button">Удалить</a>

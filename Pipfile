@@ -10,6 +10,7 @@ transliterate = "*"
 pytils = "*"
 django = "*"
 ipython = "*"
+random = "*"
 
 [requires]
 python_version = "3.8"
