@@ -1,5 +1,6 @@
 from polls.models import Test, Question, Poll
 from django.forms import ModelForm
+from django import forms
 
 
 class CreateTestForm(ModelForm):
@@ -14,6 +15,8 @@ class CreateTestForm(ModelForm):
 
 
 class CreateQuestionForm(ModelForm):
+
+
     def __init__(self, *args, **kwargs): # переопределение конструктора с целью передачи стиля для каждого из полей
         super().__init__(*args, **kwargs)
         self.fields['question_text'].widget.attrs.update({'class': 'form-control'})

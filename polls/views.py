@@ -12,6 +12,7 @@ class IndexPageView(ListView):
 """ Test """
 
 class TestListView(ListView):
+    title = 'Список тестов'
     model = Test
     template_name = 'polls/test_list.html'
 
@@ -101,12 +102,10 @@ class RunTestView(DetailView):
 
 
 
-def question_list(request):
-    question = Test.question.all()
+def CreateTestFunc(View):
+
     test = Test.objects.all()
-    paginator = Paginator(question, 1)
-    questions = paginator.get_page(1)
-    context = {'questions': questions.object_list, 'test': test}
+    context = 4
 
     return render(request, 'polls/run_test.html', context)
 

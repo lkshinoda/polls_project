@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils.text import slugify
 import time
 from pytils import translit
 from django.urls import reverse
@@ -11,15 +10,14 @@ def gen_slug(s):    # генерация уникального slug в форм
     return (f'{new_slug}-{t}')
 
 
-
 class Question(models.Model):
-    question_text = models.TextField(max_length=2000)
-    true_answer = models.CharField(max_length=255)
-    option_a = models.CharField(max_length=50)
-    option_b = models.CharField(max_length=50)
-    option_c = models.CharField(max_length=50)
-    is_active = models.BooleanField(default=True)
-    admin_comment = models.CharField(max_length=255, blank=True)
+    question_text = models.TextField(max_length=2000, verbose_name='Текст вопроса')
+    true_answer = models.CharField(max_length=50, verbose_name='Верный варинат ответа')
+    option_a = models.CharField(max_length=50, verbose_name='Второй вариант')
+    option_b = models.CharField(max_length=50, verbose_name='Третий вариант')
+    option_c = models.CharField(max_length=50, verbose_name='Четвертый вариант')
+    is_active = models.BooleanField(default=True, verbose_name='Активный')
+    admin_comment = models.CharField(max_length=255, blank=True, verbose_name='Коментарий администратора')
 
 
     def get_absolute_url(self):
@@ -34,12 +32,12 @@ class Question(models.Model):
 
 
 class Test(models.Model):
-    question = models.ManyToManyField(Question, related_name='tests')
-    title = models.CharField(max_length=255)
-    slug = models.SlugField(max_length=255)  # default length = 50
-    overview = models.TextField(max_length=2000)
-    is_active = models.BooleanField(default=True)
-    admin_comment = models.CharField(max_length=255)
+    question = models.ManyToManyField(Question, related_name='tests', verbose_name='Вопросы')
+    title = models.CharField(max_length=255, verbose_name='Название теста')
+    slug = models.SlugField(max_length=255, verbose_name='Slug')  # default length = 50
+    overview = models.TextField(max_length=2000, verbose_name='Подробное описание')
+    is_active = models.BooleanField(default=True, verbose_name='Активный')
+    admin_comment = models.CharField(max_length=255, blank=True, verbose_name='Коментарий администратора')
 
     def get_absolute_url(self):
         return reverse('detail_test', kwargs={'slug': self.slug})
@@ -58,12 +56,12 @@ class Test(models.Model):
 
 
 class Poll(models.Model):
-    test = models.ManyToManyField(Test, related_name='polls')
-    title = models.CharField(max_length=255)
-    slug = models.SlugField(max_length=255, unique=True)
-    overview = models.TextField(max_length=2000)
-    is_active = models.BooleanField(default=True)
-    admin_comment = models.CharField(max_length=255)
+    test = models.ManyToManyField(Test, related_name='polls', verbose_name='Тесты')
+    title = models.CharField(max_length=255, verbose_name='Название')
+    slug = models.SlugField(max_length=255, unique=True, verbose_name='Slug')
+    overview = models.TextField(max_length=2000, verbose_name='Описание')
+    is_active = models.BooleanField(default=True, verbose_name='Активный')
+    admin_comment = models.CharField(max_length=255, blank=True, verbose_name='Коментарий администратора')
 
     def get_absolute_url(self):
         return reverse('detail_poll', kwargs={'slug': self.slug})
