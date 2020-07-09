@@ -6,22 +6,25 @@
 
 {% block nav_bar_menu %}
     <li class="nav-item">
-        <a class="nav-link" href="{% url 'create_poll' %}">Создать опрос</a>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link" href="{% url 'list_poll' %}">Все опросы</a>
+        <a class="nav-link" href="{% url 'view_poll' %}">Все опросы</a>
     </li>
 {% endblock %}
 
-{% block body %}
+{% block content %}
+
+    
     <div> {{ poll.title }} </div>
     <br>
     <div>{{ poll.description }}</div>
-
+    
+    <div>
+        {% for test in poll.test.all %}
+        <br>
+        <li>{{ test.title }}</li>
+        {% endfor %}
+    </div>
     <br>
     <br>
-
     <a class="btn btn-outline-primary" href="{% url 'update_poll' slug=poll.slug %}" role="button">Изменить</a>
     <a class="btn btn-outline-danger" href="{% url 'delete_poll' slug=poll.slug %}" role="button">Удалить</a>
 

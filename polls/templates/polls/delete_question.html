@@ -4,7 +4,7 @@
     Удаление вопроса {{ object.question_text }}
 {% endblock %}
 
-{% block body %}
+{% block content %}
 
     <form action="." method="POST">{% csrf_token %}
     <h3>Вы точно хотите удалить вопрос <br> "{{ object.question_text }}"?</h3>

@@ -4,7 +4,7 @@
     Удаление теста {{ object.title }}
 {% endblock %}
 
-{% block body %}
+{% block content %}
 
     <form action="." method="POST">{% csrf_token %}
     <h3>Вы точно хотите удалить тест <br> "{{ object.title }}"?</h3>

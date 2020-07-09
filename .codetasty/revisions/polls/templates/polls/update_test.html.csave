@@ -1,0 +1,2 @@
+codetasty.revision.2.0
+{"ts":1594293042,"restoring":false,"user_id":37673,"patch":[{"diffs":[[1,"{% extends \"base.html\" %}\n\n{% block title %}\n    Обновить тест\n{% endblock %}\n\n{% block content %}\n    <form method=\"POST\" action=\"\">\n        {% csrf_token %}\n\n        <p>Название теста</p>\n        <p>{{ form.title }}</p>\n        <p>Описание</p>\n        <p>{{ form.description }}</p>\n\n\n\n        <button type=\"submit\" class=\"btn btn-primary\">Изменить</button>\n    </form>\n{% endblock %}"]],"start1":0,"start2":0,"length1":0,"length2":385}],"length":385}

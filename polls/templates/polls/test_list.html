@@ -10,14 +10,24 @@
     </li>
 {% endblock %}
 
-{% block body %}
-
-    <div>
-
-        {% for object in object_list %}
-            <p><a href="{% url 'detail_test' slug=object.slug %}">{{ object.title }}</a></p>
-        {% endfor %}
-
-    </div>
-
+{% block content %}
+     {% block format_content %}
+        <div class="container pt-5">
+            <div class='mt-4'>
+                <div class="row mb-2 polls">
+                    {% for test in object_list %}
+                        <div class="col-md-10">
+                            <div class="shadow p-3 mb-5 bg-white rounded">
+                                <div class="col p-3 d-flex flex-column position-static">
+                                    <h3 class="mb-0">{{ test.title }}</h3>
+                                    <p class="mb-auto">{{ test.description }}</p>
+                                    <a href="{% url 'detail_test' slug=test.slug %}" class="stretched-link"></a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endblock %}
 {% endblock %}

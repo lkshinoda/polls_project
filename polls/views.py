@@ -5,10 +5,6 @@ from django.shortcuts import get_object_or_404, render
 from django.http import JsonResponse
 
 
-class IndexPageView(ListView):
-    model = Poll
-    template_name = 'polls/index.html'
-
 
 """ Test """
 
@@ -74,16 +70,6 @@ class QuestionDeleteView(DeleteView):
 """ Poll """
 
 
-class PollCreateView(CreateView):
-    form_class = CreatePollForm
-    template_name = 'polls/create_poll.html'
-
-
-class PollListView(ListView):
-    model = Poll
-    template_name = 'polls/poll_list.html'
-
-
 class PollDetailView(DetailView):
     model = Poll
     template_name = 'polls/detail_poll.html'
@@ -106,10 +92,11 @@ class RunTestView(DetailView):
     template_name = 'polls/run_test.html'
 
 
-def create_poll(request):
+def view_poll(request):
+    tests = Test.objects.all()
     polls = Poll.objects.all()
     response_data = {}
-    context = {'polls': polls}
+    context = {'polls': polls, 'tests': tests}
 
     if request.POST.get('action') == 'add':
         title = request.POST.get('title')
@@ -124,7 +111,8 @@ def create_poll(request):
         )
         return JsonResponse(response_data)
 
-    return render(request, 'polls/create_poll.html', context)
+    return render(request, 'polls/index.html', context)
+    
 
 
 def create_question(request):
@@ -132,7 +120,7 @@ def create_question(request):
     response_data = {}
     context = {'questions': questions}
 
-    if request.POST.get('action') == 'post':
+    if request.POST.get('action') == 'add':
         question_text = request.POST.get('question_text')
         true_answer = request.POST.get('true_answer')
         option_a = request.POST.get('option_a')
@@ -154,4 +142,4 @@ def create_question(request):
         )
         return JsonResponse(response_data)
 
-    return render(request, 'polls/test.html', context)
+    return render(request, 'polls/create_question.html', context)
