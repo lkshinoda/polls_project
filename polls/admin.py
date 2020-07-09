@@ -4,15 +4,15 @@ from polls.forms import CreateTestForm
 
 
 class TestPageAdmin(admin.ModelAdmin):
-    list_display = ['title', 'overview']
-    list_filter = ['title', 'overview']
-    search_fields = ['title', 'overview']
+    list_display = ['title', 'description']
+    list_filter = ['title', 'description']
+    search_fields = ['title', 'description']
 
 
 class PollPageAdmin(admin.ModelAdmin):
-    list_display = ['title', 'overview']
-    list_filter = ['title', 'overview']
-    search_fields = ['title', 'overview']
+    list_display = ['title', 'description']
+    list_filter = ['title', 'description']
+    search_fields = ['title', 'description']
     
 
 class QuestionPageAdmin(admin.ModelAdmin):

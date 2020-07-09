@@ -7,11 +7,11 @@ class CreateTestForm(ModelForm):
     def __init__(self, *args, **kwargs): # переопределение конструктора с целью передачи стиля для каждого из полей
         super().__init__(*args, **kwargs)
         self.fields['title'].widget.attrs.update({'class': 'form-control'})
-        self.fields['overview'].widget.attrs.update({'class': 'form-control'})
+        self.fields['description'].widget.attrs.update({'class': 'form-control'})
         
     class Meta:
         model = Test
-        fields = ['title', 'overview']
+        fields = ['title', 'description']
 
 
 class CreateQuestionForm(ModelForm):
@@ -34,8 +34,8 @@ class CreatePollForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['title'].widget.attrs.update({'class': 'form-control'})
-        self.fields['overview'].widget.attrs.update({'class': 'form-control'})
+        self.fields['description'].widget.attrs.update({'class': 'form-control'})
 
     class Meta:
         model = Poll
-        fields = ['title', 'overview']
+        fields = ['title', 'description']

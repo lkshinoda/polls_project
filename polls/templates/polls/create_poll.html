@@ -1,18 +1,71 @@
-{% extends "base.html" %}
+<html>
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="container pt-5">
+            <form method="POST" id="poll-form">
+                {% csrf_token %}
+                <div class="form-group">
+                <label for="exampleInputEmail1">Title</label>
+                <input type="text" class="form-control" id="title" placeholder="Title">
+                </div>
+                <div class="form-group">
+                        <label for="exampleInputEmail1">Description</label>
+                        <textarea class="form-control" id="description" placeholder="Description"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+            <div class="row mb-2 polls">
+                    {% for poll in polls %}
+                    <div class="col-md-6">
+                        <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                            <div class="col p-4 d-flex flex-column position-static">
+                                <h3 class="mb-0">{{poll.title}}</h3>
+                                <p class="mb-auto">{{poll.description}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
 
-{% block title %}
-    Создать опрос
-{% endblock %}
+            </div>
+        </div>
 
-{% block body %}
-    <form method="POST" action="">
-        {% csrf_token %}
+    </body>
 
-        <p>Название опроса</p>
-        <p>{{ form.title }}</p>
-        <p>Описание</p>
-        <p>{{ form.overview }}</p>
+    <script src="/static/js/jquery-2.2.4.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
 
-        <button type="submit" class="btn btn-primary">Создать</button>
-    </form>
-{% endblock %}
+    <script>
+        $(document).on('submit', '#poll-form',function(e){
+            e.preventDefault();
+            $.ajax({
+                type:'POST',
+                url:'{% url "create_poll" %}',
+                data:{
+                    title:$('#title').val(),
+                    description:$('#description').val(),
+                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                    action: 'add'
+                },
+                success:function(json){
+                    document.getElementById("poll-form").reset();
+                    $(".polls").prepend('<div class="col-md-6">'+
+                        '<div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">' +
+                            '<div class="col p-4 d-flex flex-column position-static">' +
+                                '<h3 class="mb-0">' + json.title + '</h3>' +
+                                '<p class="mb-auto">' + json.description + '</p>' +
+                            '</div>' +
+                        '</div>' +
+                    '</div>'
+                    )
+                },
+                error : function(xhr,errmsg,err) {
+                $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                    " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            }
+            });
+        });
+    </script>
+</html>

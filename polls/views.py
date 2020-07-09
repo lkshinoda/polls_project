@@ -2,14 +2,16 @@ from polls.forms import CreateTestForm, CreateQuestionForm, CreatePollForm
 from polls.models import Question, Poll, Test
 from django.views.generic import ListView, DetailView, DeleteView, CreateView, UpdateView, View
 from django.shortcuts import get_object_or_404, render
-from django.core.paginator import Paginator
+from django.http import JsonResponse
 
 
 class IndexPageView(ListView):
     model = Poll
     template_name = 'polls/index.html'
 
+
 """ Test """
+
 
 class TestListView(ListView):
     title = 'Список тестов'
@@ -41,6 +43,7 @@ class TestDeleteView(DeleteView):
 
 """ Question """
 
+
 class QuestionListView(ListView):
     model = Question
     template_name = 'polls/question_list.html'
@@ -67,7 +70,9 @@ class QuestionDeleteView(DeleteView):
     template_name = 'polls/delete_question.html'
     success_url = '/question/'
 
+
 """ Poll """
+
 
 class PollCreateView(CreateView):
     form_class = CreatePollForm
@@ -101,13 +106,52 @@ class RunTestView(DetailView):
     template_name = 'polls/run_test.html'
 
 
+def create_poll(request):
+    polls = Poll.objects.all()
+    response_data = {}
+    context = {'polls': polls}
 
-def CreateTestFunc(View):
+    if request.POST.get('action') == 'add':
+        title = request.POST.get('title')
+        description = request.POST.get('description')
 
-    test = Test.objects.all()
-    context = 4
+        response_data['title'] = title
+        response_data['description'] = description
 
-    return render(request, 'polls/run_test.html', context)
+        Poll.objects.create(
+            title=title,
+            description=description
+        )
+        return JsonResponse(response_data)
 
-def answer(request, question_id):
-    pass
+    return render(request, 'polls/create_poll.html', context)
+
+
+def create_question(request):
+    questions = Question.objects.all()
+    response_data = {}
+    context = {'questions': questions}
+
+    if request.POST.get('action') == 'post':
+        question_text = request.POST.get('question_text')
+        true_answer = request.POST.get('true_answer')
+        option_a = request.POST.get('option_a')
+        option_b = request.POST.get('option_b')
+        option_c = request.POST.get('option_c')
+
+        response_data['question_text'] = question_text
+        response_data['true_answer'] = true_answer
+        response_data['option_a'] = option_a
+        response_data['option_b'] = option_b
+        response_data['option_c'] = option_c
+
+        Question.objects.create(
+            question_text=question_text,
+            true_answer=true_answer,
+            option_a=option_a,
+            option_b=option_b,
+            option_c=option_c
+        )
+        return JsonResponse(response_data)
+
+    return render(request, 'polls/test.html', context)

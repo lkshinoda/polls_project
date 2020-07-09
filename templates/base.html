@@ -22,7 +22,7 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="{% url 'home' %}">Домой <span class="sr-only">(current)</span></a>
                 </li>
-                
+
                 {% block nav_bar_menu %}
 
                 {% endblock %}
@@ -32,15 +32,19 @@
 {% endblock %}
 <br>
 <br>
-<div class="container" mt-5>
-    <div class="row">
-        <div class="col-6 offset-md-2">
-            {% block body %}
-                Body of the base page
-            {% endblock %}
+{% block format %}
+    <div class="container" mt-5>
+        <div class="row">
+            <div class="col-6 offset-md-2">
+
+                {% block body %}
+                    Body of the base page
+                {% endblock %}
+
+            </div>
         </div>
     </div>
-</div>
+{% endblock %}
 
 </body>
 </html>

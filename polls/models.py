@@ -35,7 +35,7 @@ class Test(models.Model):
     question = models.ManyToManyField(Question, related_name='tests', verbose_name='Вопросы')
     title = models.CharField(max_length=255, verbose_name='Название теста')
     slug = models.SlugField(max_length=255, verbose_name='Slug')  # default length = 50
-    overview = models.TextField(max_length=2000, verbose_name='Подробное описание')
+    description = models.TextField(max_length=2000, verbose_name='Подробное описание')
     is_active = models.BooleanField(default=True, verbose_name='Активный')
     admin_comment = models.CharField(max_length=255, blank=True, verbose_name='Коментарий администратора')
 
@@ -59,7 +59,7 @@ class Poll(models.Model):
     test = models.ManyToManyField(Test, related_name='polls', verbose_name='Тесты')
     title = models.CharField(max_length=255, verbose_name='Название')
     slug = models.SlugField(max_length=255, unique=True, verbose_name='Slug')
-    overview = models.TextField(max_length=2000, verbose_name='Описание')
+    description = models.TextField(max_length=2000, verbose_name='Описание')
     is_active = models.BooleanField(default=True, verbose_name='Активный')
     admin_comment = models.CharField(max_length=255, blank=True, verbose_name='Коментарий администратора')
 
