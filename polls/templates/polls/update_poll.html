@@ -12,6 +12,15 @@
         <p>{{ form.title }}</p>
         <p>Описание</p>
         <p>{{ form.description }}</p>
+        
+        Прикрепить тесты к опросу
+        <div class='mb-4'>
+            <select class="custom-select" multiple>
+                {% for test in tests %}
+                <option value="{{ test.id }}">{{ test.title }}</option>
+                {% endfor %}
+            </select>
+        </div>
 
 
 

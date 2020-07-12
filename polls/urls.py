@@ -17,6 +17,8 @@ from polls.views import (
     PollUpdateView,
     PollDeleteView,
     
+    CreateSelfPollView,
+    
     RunTestView,
 )
 
@@ -40,4 +42,5 @@ urlpatterns = [
     path('poll/<str:slug>/', PollDetailView.as_view(), name='detail_poll'),
     path('poll/<str:slug>/update/', PollUpdateView.as_view(), name='update_poll'),
     path('poll/<str:slug>/delete/', PollDeleteView.as_view(), name='delete_poll'),
+    path('create_poll/', CreateSelfPollView.as_view(), name='create_poll'),
 ]

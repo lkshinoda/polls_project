@@ -4,28 +4,24 @@
     {{ poll.title }}
 {% endblock %}
 
-{% block nav_bar_menu %}
-    <li class="nav-item">
-        <a class="nav-link" href="{% url 'view_poll' %}">Все опросы</a>
-    </li>
-{% endblock %}
-
 {% block content %}
-
-    
-    <div> {{ poll.title }} </div>
-    <br>
-    <div>{{ poll.description }}</div>
-    
-    <div>
-        {% for test in poll.test.all %}
-        <br>
-        <li>{{ test.title }}</li>
-        {% endfor %}
+    <div class="mt-4">
+        <div class="shadow p-3 mb-5 bg-white rounded">
+            <div class="card-body">
+                <h5 class="card-title">{{ poll.title }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted"></h6>
+                <p class="card-text">{{ poll.description }}</p>
+                {% for test in poll.test.all %}
+                    <div class="mt-4">
+                        <li>{{ test.title }}</li>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
-    <br>
-    <br>
-    <a class="btn btn-outline-primary" href="{% url 'update_poll' slug=poll.slug %}" role="button">Изменить</a>
-    <a class="btn btn-outline-danger" href="{% url 'delete_poll' slug=poll.slug %}" role="button">Удалить</a>
 
+        <div class="mt-4">
+            <a class="btn btn-outline-primary" href="{% url 'update_poll' slug=poll.slug %}" role="button">Изменить</a>
+            <a class="btn btn-outline-danger" href="{% url 'delete_poll' slug=poll.slug %}" role="button">Удалить</a>
+        </div>
 {% endblock %}

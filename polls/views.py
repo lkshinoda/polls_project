@@ -1,9 +1,8 @@
 from polls.forms import CreateTestForm, CreateQuestionForm, CreatePollForm
 from polls.models import Question, Poll, Test
 from django.views.generic import ListView, DetailView, DeleteView, CreateView, UpdateView, View
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.http import JsonResponse
-
 
 
 """ Test """
@@ -75,16 +74,27 @@ class PollDetailView(DetailView):
     template_name = 'polls/detail_poll.html'
 
 
-class PollUpdateView(UpdateView):
-    model = Poll
-    form_class = CreatePollForm
-    template_name = 'polls/update_poll.html'
-
+class PollUpdateView(View):
+    def get(self, request, slug):
+        tests = Test.objects.all()
+        poll = Poll.objects.get(slug__iexact=slug)
+        form = CreatePollForm(instance=poll)
+        template_name = 'polls/update_poll.html'
+        context = {'form': form, 'poll': poll, 'tests': tests}
+        return render(request, template_name, context)
+    
+    def post(self, request, slug):
+        slug = Poll.objects.get(slug__iexact=slug)
+        form = CreatePollForm(request.POST, instance=slug)
+        
+        if form.is_valid():
+            new_poll = form.save()
+            return redirect(new_poll)
 
 class PollDeleteView(DeleteView):
     model = Poll
     template_name = 'polls/delete_poll.html'
-    success_url = '/poll/'
+    success_url = '/'
 
 
 class RunTestView(DetailView):
@@ -113,8 +123,6 @@ def view_poll(request):
 
     return render(request, 'polls/index.html', context)
     
-
-
 def create_question(request):
     questions = Question.objects.all()
     response_data = {}
@@ -142,4 +150,38 @@ def create_question(request):
         )
         return JsonResponse(response_data)
 
-    return render(request, 'polls/create_question.html', context)
+    return render(request, 'polls/test.html', context)
+
+
+# def create_poll(request):
+#     question_form = CreateQuestionForm(instance=Question)
+#     tests = Test.objects.all()
+#     polls = Poll.objects.all()
+#     response_data = {}
+#     context = {'polls': polls, 'tests': tests}
+
+#     if request.POST.get('action') == 'add':
+#         title = request.POST.get('title')
+#         description = request.POST.get('description')
+
+#         response_data['title'] = title
+#         response_data['description'] = description
+
+#         Poll.objects.create(
+#             title=title,
+#             description=description
+#         )
+#         return JsonResponse(response_data)
+
+#     return render(request, 'polls/create_poll.html', context)
+    
+    
+class CreateSelfPollView(View):
+    def get(self, request):
+        question_form = CreateQuestionForm()
+        template_name = 'polls/create_poll.html'
+        context = {'question_form': question_form}
+        return render(request, template_name, context)
+    
+    def post(self, request, pk):
+        pass

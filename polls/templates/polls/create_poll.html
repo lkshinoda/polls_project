@@ -1,58 +1,77 @@
 {% extends "base.html" %}
 
-
-
 {% block title %}
-    Опросы
+    Создать свой опрос
 {% endblock %}
 
+{% block nav_bar_menu %}
+
+
+    <li class="nav-item">
+        <a class="nav-link " href=" {% url 'test_list' %} "  role="button" >
+            Тесты
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link " href=" {% url 'list_question' %} "  role="button" >
+            Вопросы
+        </a>
+    </li>
+
+{% endblock %}
 
 {% block content %}
+
     {% block format_content %}
-    
+
         <div class="container pt-5">
-            
-            <div class='mt-4'>
-                <div class="row mb-2 polls">
-                    {% for poll in polls %}
-                        <div class="col-md-6">
-                            <div class="shadow p-3 mb-5 bg-white rounded">
-                                <div class="col p-3 d-flex flex-column position-static">
-                                    <h3 class="mb-0">{{ poll.title }}</h3>
-                                    <p class="mb-auto">{{ poll.description }}</p>
-                                    <a href="{% url 'detail_poll' slug=poll.slug %}" class="stretched-link"></a>
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-            
-    
-            
-            // form
-            <button type="button" class="btn btn-outline-primary">Добавить опрос</button>
-            <div id="show_form" style="display:none" class='mt-4 ml-2'>
-                <div class="d-inline-flex bd-highlight">
-                        
-                    <form method="POST" id="poll-form">{% csrf_token %}
+            <div class="col-md-9">
+
+                <form method="POST" id="question-form">{% csrf_token %}
+                    <div class="dynamic_fields">
+                        Тест
                         <div class="form-group">
-                            <input type="text" class="form-control" id="title" placeholder="Название опроса">
+                            <input type="text" class="form-control" id="title" placeholder="Название теста">
                         </div>
                         <div class="form-group">
                             <textarea class="form-control" id="description" placeholder="Описание"></textarea>
                         </div>
-                        // checkboxes
-                        <button type="submit" class="btn btn-primary">Создать</button>
-                    </form>
-                        
+                        <div class="example_answer">
+                            <div class="answer_form">
+                                Вопросы:
+                                <div class="form-group">
+                                    <textarea class="form-control" id="description" placeholder="Вопрос"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="title" placeholder="Правильный ответ">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="title" placeholder="Вариант ответа">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="title" placeholder="Вариант ответа">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="title" placeholder="Вариант ответа">
+                                </div>
+                            </div>
+                        </div>
+                    <div class="answers"></div>
+                        <a class="js-add btn-primary btn active" role="button" aria-pressed="true">Добавить вопрос</a>
+                    </div>
+                <div class="mt-4">
+                    <button class="btn pull-right btn btn-success">Создать тест</button>
                 </div>
+                </form>
             </div>
         </div>
-        
+
+
+
+
     {% endblock %}
 {% endblock %}
-
 
 {% block scripts %}
     <script src="/static/js/jquery-2.2.4.min.js"></script>
@@ -63,7 +82,7 @@
             e.preventDefault();
             $.ajax({
                 type: 'POST',
-                url: '{% url "create_poll" %}',
+                url: '{% url "home" %}',
                 data: {
                     title: $('#title').val(),
                     description: $('#description').val(),
@@ -96,5 +115,36 @@
         $("#show_form").toggle(500);
         });
     </script>
+
+
+    <script>
+
+    	// определение кнопки добавления
+	var button_add = document.querySelector( '.dynamic_fields .js-add' );
+	// ожидание клика на кнопку .add
+	button_add.addEventListener( 'click', function () {
+		// определение блока, содержащего элементы
+		var answers = document.querySelector( '.dynamic_fields .answers' );
+		// клонирование образцового элемента
+		var element = document.querySelector( '.example_answer' ).cloneNode( true );
+		// добавление класса к клонированному элементу
+		element.classList.add( 'answer' );
+		// удаление класса из клонированного элемента
+		element.classList.remove( 'example_answer' );
+		// добавление нового элемента к списку
+		answers.appendChild( element );
+	} );
+	// ожидание клика по документу
+	document.addEventListener( 'click', function ( el ) {
+		// если клик был по элементу, который содержит класс remove
+		if ( el.target && el.target.classList.contains( 'js-remove' ) ) {
+			// определение прародительского блока, содержащего кнопку
+			var child = el.target.closest( '.answer_worm' );
+			// удаление элемента списка
+			child.parentNode.removeChild( child );
+		}
+	} );
+
+</script>
     
 {% endblock %}
