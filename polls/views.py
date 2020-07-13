@@ -183,5 +183,5 @@ class CreateSelfPollView(View):
         context = {'question_form': question_form}
         return render(request, template_name, context)
     
-    def post(self, request, pk):
+    def post(self, request):
         pass
