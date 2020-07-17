@@ -15,6 +15,9 @@
 {% endblock %}
 
 {% block content %}
+
+    <br>
+    <br>
     <div> {{ test.title }} </div>
     <br>
     <div>{{ test.description }}</div>
@@ -25,6 +28,38 @@
     <a class="btn btn-primary" href="{% url 'run_test' slug=test.slug %}" role="button">Пройти тест</a>
 
     <a class="btn btn-outline-primary" href="{% url 'update_test' slug=test.slug %}" role="button">Изменить</a>
-    <a class="btn btn-outline-danger" href="{% url 'delete_test' slug=test.slug %}" role="button">Удалить</a>
+    <button type="button" class="btn btn-outline-danger">Удалить</button>
 
+
+
+
+
+    
+    <div id="show_form" style="display:none">
+        <hr>
+        <div class="d-inline-flex bd-highlight">
+                
+            <form action="." method="POST">{% csrf_token %}
+                <h3>Вы точно хотите удалить тест <br> "{{ test.title }}"?</h3>
+                <br>
+                <button type="button" class="btn btn-outline-primary">Оставить</button>
+                <input class="btn btn-outline-danger" type="submit" value="Удалить">
+            </form>
+                
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block scripts %}
+    <script src="/static/js/jquery-2.2.4.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    
+    <script>
+        $("button").click(function() {
+        $("#show_form").toggle(400);
+        });
+    </script>
+    
 {% endblock %}

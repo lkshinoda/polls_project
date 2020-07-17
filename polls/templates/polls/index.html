@@ -31,7 +31,7 @@
                     <div class='mt-4'>
                         <div class="row mb-2 polls">
                             {% for poll in polls %}
-                                <div class="col-md-9">
+                                <div class="col-md-6">
                                     <div class="shadow p-3 mb-5 bg-white rounded">
                                         <div class="col p-3 d-flex flex-column position-static">
                                             <h3 class="mb-0">{{ poll.title }}</h3>
@@ -60,11 +60,13 @@
                                 </div>
                                 Добавить тесты к опросу
                                 <div>
-                                    <select class="custom-select" multiple>
+
+                                    <select id="multiple" multiple="multiple">
                                         {% for test in tests %}
-                                        <option value="{{ test.id }}">{{ test.title }}</option>
+                                            <option id="{{ test.id }}">{{ test.title }}</option>
                                         {% endfor %}
                                     </select>
+
                                 </div>
                                 <br>
                                 <button type="submit" class="btn btn-primary">Создать</button>
@@ -94,19 +96,20 @@
                     description: $('#description').val(),
                     csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
                     action: 'add'
+
                 },
                 success: function(json) {
                     document.getElementById("poll-form").reset();
-                    $(".polls").prepend('<div class="col-md-6">' +
-                        '<div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">' +
-                        '<div class="col p-4 d-flex flex-column position-static">' +
-                        '<h3 class="mb-0">' + json.title + '</h3>' +
-                        '<p class="mb-auto">' + json.description + '</p>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>'
-                    )
-                },
+                    $(".polls").append('<div class="col-md-6">' +
+                                        '<div class="shadow p-3 mb-5 bg-white rounded">' +
+                                        '<div class="col p-3 d-flex flex-column position-static">' +
+                                        '<h3 class="mb-0">' + json.title + '</h3>' +
+                                        '<p class="mb-auto">'  + json.description + '</p>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '</div>'
+                                        )
+                                    },
                 error: function(xhr, errmsg, err) {
                     $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: " + errmsg +
                         " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom

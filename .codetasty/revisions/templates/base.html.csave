@@ -59,3 +59,5 @@ codetasty.revision.2.0
 {"ts":1594380023,"restoring":false,"user_id":37673,"patch":[{"diffs":[[0,"ть свой "],[1,"опрос"],[0," <span c"]],"start1":1446,"start2":1446,"length1":16,"length2":21}],"length":2279}
 {"ts":1594380049,"restoring":false,"user_id":37673,"patch":[{"diffs":[[0,"ef=\"{% url '"],[-1,"hom"],[1,"creat"],[0,"e' %}\">Созда"]],"start1":1419,"start2":1419,"length1":27,"length2":29}],"length":2281}
 {"ts":1594380052,"restoring":false,"user_id":37673,"patch":[{"diffs":[[0," 'create"],[1,"_poll"],[0,"' %}\">Со"]],"start1":1429,"start2":1429,"length1":16,"length2":21}],"length":2286}
+{"ts":1594887307,"restoring":false,"user_id":37673,"patch":[{"diffs":[[0,"ate_"],[-1,"poll"],[1,"test"],[0,"' %}"]],"start1":1434,"start2":1434,"length1":12,"length2":12}],"length":2286}
+{"ts":1594887314,"restoring":false,"user_id":37673,"patch":[{"diffs":[[0,"вой "],[-1,"опрос"],[1,"тест"],[0," <sp"]],"start1":1457,"start2":1457,"length1":13,"length2":12}],"length":2285}

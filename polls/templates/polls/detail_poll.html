@@ -22,6 +22,35 @@
 
         <div class="mt-4">
             <a class="btn btn-outline-primary" href="{% url 'update_poll' slug=poll.slug %}" role="button">Изменить</a>
-            <a class="btn btn-outline-danger" href="{% url 'delete_poll' slug=poll.slug %}" role="button">Удалить</a>
+            <button type="button" class="btn btn-outline-danger">Удалить</button>
         </div>
+
+
+  <div id="show_form" style="display:none">
+        <hr>
+        <div class="d-inline-flex bd-highlight">
+
+            <form action="." method="POST">{% csrf_token %}
+                <h3>Вы точно хотите удалить опрос <br> "{{ poll.title }}"?</h3>
+                <br>
+                <button type="button" class="btn btn-primary">Оставить</button>
+                <input class="btn btn-outline-danger" type="submit" value="Удалить">
+            </form>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block scripts %}
+    <script src="/static/js/jquery-2.2.4.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+
+    <script>
+        $("button").click(function() {
+        $("#show_form").toggle(400);
+        });
+    </script>
+
 {% endblock %}

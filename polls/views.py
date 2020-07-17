@@ -3,10 +3,9 @@ from polls.models import Question, Poll, Test
 from django.views.generic import ListView, DetailView, DeleteView, CreateView, UpdateView, View
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import JsonResponse
-
+from polls.services import *
 
 """ Test """
-
 
 class TestListView(ListView):
     title = 'Список тестов'
@@ -14,9 +13,17 @@ class TestListView(ListView):
     template_name = 'polls/test_list.html'
 
 
-class TestDetailView(DetailView):
-    model = Test
-    template_name = 'polls/detail_test.html'
+class TestDetailView(View):
+    def get(self, request, slug):
+        test = Test.objects.get(slug__iexact=slug)
+        template_name = 'polls/detail_test.html'
+        context = {'test': test}
+        return render(request, template_name, context)
+        
+    def post(self, request, slug):
+        test = Test.objects.get(slug__iexact=slug)
+        test.delete()
+        return redirect('/test/')
 
 
 class TestCreateView(CreateView):
@@ -33,7 +40,7 @@ class TestUpdateView(UpdateView):
 class TestDeleteView(DeleteView):
     model = Test
     template_name = 'polls/delete_test.html'
-    success_url = '/'
+    success_url = '/test/'
 
 
 """ Question """
@@ -50,8 +57,16 @@ class QuestionCreateView(CreateView):
 
 
 class QuestionDetailView(DetailView):
-    model = Question
-    template_name = 'polls/detail_question.html'
+    def get(self, request, pk):
+        question = Question.objects.get(id=pk)
+        template_name = 'polls/detail_question.html'
+        context = {'question': question}
+        return render(request, template_name, context)
+        
+    def post(self, request, pk):
+        quest = Question.objects.get(id=pk)
+        quest.delete()
+        return redirect('/question/')
 
 
 class QuestionUpdateView(UpdateView):
@@ -69,9 +84,17 @@ class QuestionDeleteView(DeleteView):
 """ Poll """
 
 
-class PollDetailView(DetailView):
-    model = Poll
-    template_name = 'polls/detail_poll.html'
+class PollDetailView(View):
+    def get(self, request, slug):
+        poll = Poll.objects.get(slug__iexact=slug)
+        template_name = 'polls/detail_poll.html'
+        context = {'poll': poll}
+        return render(request, template_name, context)
+
+    def post(self, request, slug):
+        poll = Poll.objects.get(slug__iexact=slug)
+        poll.delete()
+        return redirect('/')
 
 
 class PollUpdateView(View):
@@ -129,20 +152,20 @@ def create_question(request):
     context = {'questions': questions}
 
     if request.POST.get('action') == 'add':
-        question_text = request.POST.get('question_text')
+        title = request.POST.get('title')
         true_answer = request.POST.get('true_answer')
         option_a = request.POST.get('option_a')
         option_b = request.POST.get('option_b')
         option_c = request.POST.get('option_c')
 
-        response_data['question_text'] = question_text
+        response_data['title'] = title
         response_data['true_answer'] = true_answer
         response_data['option_a'] = option_a
         response_data['option_b'] = option_b
         response_data['option_c'] = option_c
 
         Question.objects.create(
-            question_text=question_text,
+            title=title,
             true_answer=true_answer,
             option_a=option_a,
             option_b=option_b,
@@ -176,12 +199,21 @@ def create_question(request):
 #     return render(request, 'polls/create_poll.html', context)
     
     
-class CreateSelfPollView(View):
+class CreateSelfTestView(View):
     def get(self, request):
         question_form = CreateQuestionForm()
-        template_name = 'polls/create_poll.html'
-        context = {'question_form': question_form}
+        test_form = CreateTestForm()
+        template_name = 'polls/create_test.html'
+        context = {'question_form': question_form, 'test_form': test_form}
         return render(request, template_name, context)
-    
+            
     def post(self, request):
-        pass
+        data = request.POST
+        save_m2m_data(data)
+        template_name = 'polls/test_list.html'
+
+        return redirect('/test/')
+        
+
+def AnswerHandler(request):
+    pass

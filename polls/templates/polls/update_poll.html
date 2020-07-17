@@ -17,7 +17,7 @@
         <div class='mb-4'>
             <select class="custom-select" multiple>
                 {% for test in tests %}
-                <option value="{{ test.id }}">{{ test.title }}</option>
+                <option id="{{ test.id }}" name="{{ test.id }}">{{ test.title }}</option>
                 {% endfor %}
             </select>
         </div>

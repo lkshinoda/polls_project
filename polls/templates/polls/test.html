@@ -1,111 +1,147 @@
 {% extends "base.html" %}
 
 {% block title %}
-    Главная
+    Страница для экспериментов
 {% endblock %}
 
 
+
     {% block content %}
-        {% block format_content %}
 
-
+    
+        <div class='mt-5'>
+                <form method="POST" id="question-form">
+                {% csrf_token %}      
             
-                <div class="container pt-5">
-                    <div class='mt-4'>
-                        <div class="row mb-2 questions">
-                            {% for question in questions %}
-                                <div class="col-md-9">
-                                    <div class="shadow p-3 mb-5 bg-white rounded">
-                                        <div class="col p-3 d-flex flex-column position-static">
-                                            <h3 class="mb-3">{{question.question_text}}</h3>
-                                            <li class="mb-auto">{{question.true_answer}}</li>
-                                            <li class="mb-auto">{{question.option_a}}</li>
-                                            <li class="mb-auto">{{question.option_b}}</li>
-                                            <li class="mb-auto">{{question.option_c}}</li>
-                                            <a href="{% url 'detail_question' pk=question.id %}" class="stretched-link"></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-
+                <div class='mt-4'>
+                    <p class="text-center">Тест</p>
+                </div>
+                <div class="form-group">
+                    <input name="test_title" type="text" class="form-control" id="title" placeholder="Название теста" required oninvalid="this.setCustomValidity('Введите название теста')" oninput="setCustomValidity('')">
+                </div>
+                <div class="form-group">
+                    <textarea name="test_description" id="description" class="form-control" rows="3" placeholder="Описание теста" required oninvalid="this.setCustomValidity('Введите описание')" oninput="setCustomValidity('')"></textarea>
+                </div>
+                <div class='mt-4'>
+                    <p class="text-center">Вопросы</p>
+                </div>
                 
 
-                    <button type="button" class="btn btn-outline-primary">Добавить вопрос</button>
-
-                    <div id="show_form" style="display:none" class='mt-4 ml-2'>
-                        <div class="d-inline-flex bd-highlight">
-                                
-                            <form method="POST" id="question-form">{% csrf_token %}
-                                <div class="form-group">
-                                    <textarea class="form-control" id="question_text" placeholder="Вопрос"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="true_answer" placeholder="Правильный ответ">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="option_a" placeholder="Ответ">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="option_b" placeholder="Ответ">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="option_c" placeholder="Ответ">
-                                </div>
-                
-                                <button type="submit" class="btn btn-primary">Создать</button>
-                            </form>
-                                
+                <div class='input-form'>
+                    <div class='mt-5'>
+                        <div class="form-group col-md-15">
+                            <textarea name="question_1" type="text" class="form-control" id="question_1" placeholder="Вопрос"></textarea>
+                        </div>
+                        <div class="form-group col-md-15">
+                            <input name="correctanswer_1" type="text" class="form-control" id="correctanswer_1" placeholder="Вопрос">
+                        </div>
+                        <div class="form-group col-md-15">
+                            <input name="answer-a_1" type="text" class="form-control" id="answer-a_1" placeholder="Вариант ответа">
+                        </div>
+                        <div class="form-group col-md-15">
+                            <input name="answer-b_1" type="text" class="form-control" id="answer-b_1" placeholder="Вариант ответа">
+                        </div>
+                        <div class="form-group col-md-15">
+                            <input name="answer-c_1" type="text" class="form-control" id="answer-с_1" placeholder="Вариант ответа">
                         </div>
                     </div>
+                </div>
+               
 
-            </div>
+                
+                <input type='button' id='but_add' value='Add new' class="btn btn-outline-primary">
+                
+                
+                <div class='mt-5 text-center'>
+                    <button type="submit" class="btn btn-primary btn-lg" id="question-form">Создать тест</button>
+                </div>
+                
+            </form>
             
-        {% endblock %}
+        </div>
+            
+
     {% endblock %}
 
 {% block scripts %}
-    <script src="/static/js/jquery-2.2.4.min.js"></script>
-    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     
     <script>
-        $(document).on('submit', '#question-form', function(e) {
-            e.preventDefault();
-            $.ajax({
-                type: 'POST',
-                url: '{% url "home" %}',
-                data: {
-                    title: $('#title').val(),
-                    description: $('#description').val(),
-                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
-                    action: 'add'
-                },
-                success: function(json) {
-                    document.getElementById("question-form").reset();
-                    $(".questionss").prepend('<div class="col-md-6">' +
-                        '<div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">' +
-                        '<div class="col p-4 d-flex flex-column position-static">' +
-                        '<h3 class="mb-0">' + json.title + '</h3>' +
-                        '<p class="mb-auto">' + json.description + '</p>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>'
-                    )
-                },
-                error: function(xhr, errmsg, err) {
-                    $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: " + errmsg +
-                        " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
-                    console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
-                }
+        $(document).ready(function(){
+         
+            $('#but_add').click(function(){
+            
+                // Selecting last id 
+                var lastname_id = $('.input-form input[type=text]:nth-child(1)').last().attr('name');
+                var split_id = lastname_id.split('_');
+                
+                // New index
+                var index = Number(split_id[1]) + 1;
+                
+                
+                // Create clone
+                var newel = $('.input-form:last').clone(true);
+                
+                
+                // Set id of new element
+                $(newel).find('[class|="form-group col-md-15"]:nth-child(1)>textarea').attr("name","question_"+index);
+                $(newel).find('[class|="form-group col-md-15"]:nth-child(2)>input').attr("name","correctanswer_"+index);
+                $(newel).find('[class|="form-group col-md-15"]:nth-child(3)>input').attr("name","answer-a_"+index);
+                $(newel).find('[class|="form-group col-md-15"]:nth-child(4)>input').attr("name","answer-b_"+index);
+                $(newel).find('[class|="form-group col-md-15"]:nth-child(5)>input').attr("name","answer-c_"+index);
+        
+                // Set value
+                $(newel).find('[class|="form-group col-md-15"]:nth-child(1)>textarea').val('');
+                $(newel).find('[class|="form-group col-md-15"]:nth-child(2)>input').val('');
+                $(newel).find('[class|="form-group col-md-15"]:nth-child(3)>input').val('');
+                $(newel).find('[class|="form-group col-md-15"]:nth-child(4)>input').val('');
+                $(newel).find('[class|="form-group col-md-15"]:nth-child(5)>input').val('');
+        
+                // Insert element
+                $(newel).insertAfter(".input-form:last");
             });
+        
         });
     </script>
     
+
+    
+    
     <script>
-        $("button").click(function() {
-        $("#show_form").toggle(500);
-        });
+        
+       /*   --------------------------------------------------------------*/
+        /*  Функция для прокрутки с контролем скорости
+        /*  --------------------------------------------------------------*/
+        function scrollTo(to, duration = 700) {
+            const
+                element = document.scrollingElement || document.documentElement,
+                start = element.scrollTop,
+                change = to - start,
+                startDate = +new Date(),
+                // t = current time
+                // b = start value
+                // c = change in value
+                // d = duration
+                easeInOutQuad = function (t, b, c, d) {
+                    t /= d / 2;
+                    if (t < 1) return c / 2 * t * t + b;
+                    t--;
+                    return -c / 2 * (t * (t - 2) - 1) + b;
+                },
+                animateScroll = function () {
+                    const currentDate = +new Date();
+                    const currentTime = currentDate - startDate;
+                    element.scrollTop = parseInt(easeInOutQuad(currentTime, start, change, duration));
+                    if (currentTime < duration) {
+                        requestAnimationFrame(animateScroll);
+                    }
+                    else {
+                        element.scrollTop = to;
+                    }
+                };
+            animateScroll();
+        }
     </script>
+    
     
 {% endblock %}

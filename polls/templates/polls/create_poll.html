@@ -1,166 +1,22 @@
 {% extends "base.html" %}
 
 {% block title %}
-    Создать свой опрос
-{% endblock %}
-
-{% block nav_bar_menu %}
-
-
-    <li class="nav-item">
-        <a class="nav-link " href=" {% url 'test_list' %} "  role="button" >
-            Тесты
-        </a>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link " href=" {% url 'list_question' %} "  role="button" >
-            Вопросы
-        </a>
-    </li>
-
+    Создать опрос
 {% endblock %}
 
 {% block content %}
+    <form method="POST" action="">
+        {% csrf_token %}
 
-    {% block format_content %}
-
-
-                <form method="POST" id="question-form">{% csrf_token %}
-                    <div class="dynamic_fields">
-
-
-
-                    <div class="container">
-                        
-                            <div class="col-md-6">
-
-                                <div class="mt-4"><h6>Тест</h6></div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="title" placeholder="Название теста" required oninvalid="this.setCustomValidity('Введите название теста')" oninput="setCustomValidity('')">
-                                </div>
-                                <div class="form-group">
-                                    <textarea id="description" class="form-control" rows="6" placeholder="Описание теста" required oninvalid="this.setCustomValidity('Введите описание')" oninput="setCustomValidity('')"></textarea>
-                                
-                            </div>
-                   
-
-                        <div style="display:none">
-                            <div class="example_answer">
-                                <div class="answer">
-
-                                <div class="form-group">
-                                    <textarea class="form-control" id="description_1" rows="6" placeholder="Текст вопроса"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="true_answer_1" placeholder="Правильный ответ">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="option_a_1" placeholder="Вариант ответа">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="option_b_1" placeholder="Вариант ответа">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="option_1" placeholder="Вариант ответа">
-                                </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="answer_form">
-                            
-                            <div class="form">
-                                <div class="mt-4"><h6>Вопросы</h6></div>
-                                <div class="form-group">
-                                    <textarea class="form-control" id="descriptioni_1" rows="6" placeholder="Текст вопроса"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="true_answer_1" placeholder="Правильный ответ">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="option_a_1" placeholder="Вариант ответа">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="option_b_1" placeholder="Вариант ответа">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="option_c_1" placeholder="Вариант ответа">
-                                </div>
-                            </div>
-                        </div>
+        <p>Название опроса</p>
+        <p>{{ form.title }}</p>
+        <p>Описание</p>
+        <p>{{ form.description }}</p>
 
 
 
 
-                    <div class="answers">
 
-                    </div>
-                        <a class="js-add btn btn-outline-primary" >Добавить вопрос</a>
-                        <a class="js-remove btn btn-outline-danger">Удалить последний</a>
-                    </div>
-
-
-
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-
-                        </div>
-                        <div class="col">
-                            <div>
-                                <button class="btn btn-primary btn-lg btn-block mt-4" type="submit">Создать тест</button>
-                            </div>
-
-                        </div>
-                            <div class="col">
-                        </div>
-                    </div>
-                </div>
-
-
-                </form>
-
-
-    {% endblock %}
-{% endblock %}
-
-
-{% block scripts %}
-    <script src="/static/js/jquery-2.2.4.min.js"></script>
-    <script src="/static/js/bootstrap.min.js"></script>
-
-
-    <script>
-        // определение кнопки добавления
-	var button_add = document.querySelector( '.dynamic_fields .js-add' );
-	// ожидание клика на кнопку .add
-	button_add.addEventListener( 'click', function () {
-		// определение блока, содержащего элементы
-		var answers = document.querySelector( '.dynamic_fields .answers' );
-		// клонирование образцового элемента
-		var element = document.querySelector( '.example_answer' ).cloneNode( true );
-
-		// добавление класса к клонированному элементу
-		element.classList.add( 'answer' );
-		// удаление класса из клонированного элемента
-		element.classList.remove( 'example_answer' );
-		// добавление нового элемента к списку
-		answers.appendChild( element );
-	} );
-	// ожидание клика по документу
-	document.addEventListener( 'click', function ( el ) {
-		// если клик был по элементу, который содержит класс remove
-		if ( el.target && el.target.classList.contains( 'js-remove' ) ) {
-			// определение прародительского блока, содержащего кнопку
-			var child = el.target.closest( '.answer' );
-			// удаление элемента списка
-			child.parentNode.removeChild( child );
-		}
-	} );
-
-</script>
-    
+        <button type="submit" class="btn btn-primary">Создать</button>
+    </form>
 {% endblock %}

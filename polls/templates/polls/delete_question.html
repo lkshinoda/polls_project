@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
 {% block title %}
-    Удаление вопроса {{ object.question_text }}
+    Удаление вопроса {{ object.question_title }}
 {% endblock %}
 
 {% block content %}
 
     <form action="." method="POST">{% csrf_token %}
-    <h3>Вы точно хотите удалить вопрос <br> "{{ object.question_text }}"?</h3>
+    <h3>Вы точно хотите удалить вопрос <br> "{{ object.question_title }}"?</h3>
 
         <br>
         <br>

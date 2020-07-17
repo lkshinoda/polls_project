@@ -32,32 +32,32 @@
     <br>
 
 
-    <form action="{% url 'answer' id=test.id %}" method="post">{% csrf_token %}
+    <form action="{% url 'answer_handler' id=test.id %}" method="post">{% csrf_token %}
 
         {% for quest in test.question.all %}
 
 
             <div class="card bg-light mb-3" style="max-width: 40rem;">
                 <div class="card-body">
-                    <h5 class="card-title">{{ quest.question_text }}</h5>
+                    <h5 class="card-title">{{ quest.question_title }}</h5>
 
                         <p>
-                            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ quest.id }}">
+                            <input type="radio" name="{{ quest.id }}" id="choice{{ forloop.counter }}" value="{{ quest.id }}">
                             <label for="choice{{ forloop.counter }}">{{ quest.option_a }}</label><br>
                         </p>
 
                         <p>
-                            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ quest.id }}">
+                            <input type="radio" name="{{ quest.id }}" id="choice{{ forloop.counter }}" value="{{ quest.id }}">
                             <label for="choice{{ forloop.counter }}">{{ quest.option_b }}</label><br>
                         </p>
 
                         <p>
-                            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ quest.id }}">
+                            <input type="radio" name="{{ quest.id }}" id="choice{{ forloop.counter }}" value="{{ quest.id }}">
                             <label for="choice{{ forloop.counter }}">{{ quest.option_c }}</label><br>
                         </p>
 
                         <p>
-                            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ quest.id }}">
+                            <input type="radio" name="{{ quest.id }}" id="choice{{ forloop.counter }}" value="{{ quest.id }}">
                             <label for="choice{{ forloop.counter }}">{{ quest.true_answer }}</label><br>
                         </p>
 
