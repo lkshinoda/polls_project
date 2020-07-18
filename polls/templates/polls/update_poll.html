@@ -5,25 +5,27 @@
 {% endblock %}
 
 {% block content %}
-    <form method="POST" action="">
-        {% csrf_token %}
 
-        <p>Название теста</p>
-        <p>{{ form.title }}</p>
-        <p>Описание</p>
-        <p>{{ form.description }}</p>
-        
-        Прикрепить тесты к опросу
-        <div class='mb-4'>
-            <select class="custom-select" multiple>
-                {% for test in tests %}
-                <option id="{{ test.id }}" name="{{ test.id }}">{{ test.title }}</option>
-                {% endfor %}
-            </select>
+    <div class="mt-5">
+
+    <form method="POST">{% csrf_token %}
+        <p>{{ form }}</p>
+        <div class="form-group">
+            <label>Прикрепить к опросу тесты
+                <select multiple class="form-control" name="tests">
+                    {% for test in tests %}
+                        {% if test.id in related_id %}
+                            <option value="{{ test.id }}" selected>{{ test.title }}</option>
+                        {% else %}
+                            <option value="{{ test.id }}">{{ test.title }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </label>
         </div>
-
-
-
         <button type="submit" class="btn btn-primary">Изменить</button>
     </form>
+
+    </div>
+
 {% endblock %}

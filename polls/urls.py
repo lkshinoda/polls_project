@@ -45,4 +45,5 @@ urlpatterns = [
     
     path('test/<str:slug>/run/', RunTestView.as_view(), name='run_test'),
     path('test/<int:id>/', views.AnswerHandler, name='answer_handler'),
+
 ]

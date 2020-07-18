@@ -89,18 +89,20 @@ function on_submit_ajax_form(e) {
 </body>
 </html>
 
-    {% if object %}
-        <button type="button" class="btn btn-outline-warning"
-                onclick="load_ajax_modal('{% url 'cabinet:flow-limits-delete' flow=flow.pk pk=object.pk%}');return false;"
-        >
-            <i class="fa fa-exclamation-triangle"></i>
-            {% trans 'remove lead cap' %}
-        </button>
-    {% endif %}
+
+
+
+
+        {% if object %}
+            <button type="button" class="btn btn-outline-warning"
+                    onclick="load_ajax_modal('{% url 'home' %}');return false;"
+            >
+                <i class="fa fa-exclamation-triangle"></i>
+
+            </button>
+        {% endif %}
 ===========================
-{% load i18n %}
-{% load bootstrap4 %}
-{% load zeus_pagination %}
+
 
 
 {#    https://getbootstrap.com/docs/4.1/components/modal/ #}
@@ -109,7 +111,7 @@ function on_submit_ajax_form(e) {
      aria-labelledby="exampleModalLabel" >
   <div class="modal-dialog" role="document">
   <form id ="ajax-modal-form"
-        action="{% url 'cabinet:flow-limits-delete' flow=flow.pk pk=object.pk%}"
+        action="{% url 'home' %}"
         method="POST">
 
     {% csrf_token %}
@@ -117,7 +119,6 @@ function on_submit_ajax_form(e) {
 
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">
-            {% trans 'Confirm remove lead cap' %} {{ object }}
         </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -125,7 +126,6 @@ function on_submit_ajax_form(e) {
       </div>
 
       <div class="modal-body">
-            {% trans 'Are you sure remove lead cap' %} {{ object }} ?
 
             {% if form.non_field_errors %}
                 {% for error in form.non_field_errors %}
@@ -135,11 +135,9 @@ function on_submit_ajax_form(e) {
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">
-            {% trans 'Cancel' %}
         </button>
         <button class="btn btn-warning" type="submit" name="submit" value="Confirm">
         <i class="fa fa-exclamation-triangle" ></i>
-            {% trans 'Delete lead cap' %}
         </button>
 
       </div>

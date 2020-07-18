@@ -101,18 +101,32 @@ class PollUpdateView(View):
     def get(self, request, slug):
         tests = Test.objects.all()
         poll = Poll.objects.get(slug__iexact=slug)
+        related_tests = poll.test.all()
+
+        related_id = []
+        for test in tests:
+            if test in related_tests:
+                related_id.append(test.id)
+
         form = CreatePollForm(instance=poll)
         template_name = 'polls/update_poll.html'
-        context = {'form': form, 'poll': poll, 'tests': tests}
+        context = {'form': form, 'poll': poll, 'tests': tests, 'related_id': related_id}
         return render(request, template_name, context)
-    
+
     def post(self, request, slug):
-        slug = Poll.objects.get(slug__iexact=slug)
-        form = CreatePollForm(request.POST, instance=slug)
-        
+        tests = request.POST.getlist('tests')
+        poll = Poll.objects.get(slug__iexact=slug)
+        poll.test.clear()
+        form = CreatePollForm(request.POST, instance=poll)
+
+        for test_id in tests:
+            test = Test.objects.get(id=test_id)
+            poll.test.add(test)
+
         if form.is_valid():
             new_poll = form.save()
             return redirect(new_poll)
+
 
 class PollDeleteView(DeleteView):
     model = Poll
@@ -217,3 +231,4 @@ class CreateSelfTestView(View):
 
 def AnswerHandler(request):
     pass
+

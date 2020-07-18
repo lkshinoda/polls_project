@@ -24,7 +24,7 @@ class Question(models.Model):
         return reverse('detail_question', kwargs={'pk': self.id})
 
     def __str__(self):
-        return self.question_text
+        return self.question_title
 
     class Meta:
         verbose_name = 'Вопрос'
@@ -56,7 +56,7 @@ class Test(models.Model):
 
 
 class Poll(models.Model):
-    test = models.ManyToManyField(Test, related_name='polls', verbose_name='Тесты')
+    test = models.ManyToManyField(Test, related_name='poll', verbose_name='Тесты')
     title = models.CharField(max_length=255, verbose_name='Название')
     slug = models.SlugField(max_length=255, unique=True, verbose_name='Slug')
     description = models.TextField(max_length=2000, verbose_name='Описание')

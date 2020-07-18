@@ -35,3 +35,10 @@ def save_m2m_data(data):
             
 		question.save()
 		test.question.add(question)
+
+
+def get_related_id(obj):
+	related_id = []
+	for test in tests:
+		if test in related_tests:
+			related_id.append(test.id)
