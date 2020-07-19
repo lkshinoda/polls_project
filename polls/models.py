@@ -12,10 +12,6 @@ def gen_slug(s):    # генерация уникального slug в форм
 
 class Question(models.Model):
     title = models.TextField(max_length=2000, verbose_name='Текст вопроса')
-    true_answer = models.CharField(max_length=50, verbose_name='Верный варинат ответа')
-    option_a = models.CharField(max_length=50, verbose_name='Второй вариант')
-    option_b = models.CharField(max_length=50, verbose_name='Третий вариант')
-    option_c = models.CharField(max_length=50, verbose_name='Четвертый вариант')
     is_active = models.BooleanField(default=True, verbose_name='Активный')
     admin_comment = models.CharField(max_length=255, blank=True, verbose_name='Коментарий администратора')
 
@@ -29,6 +25,19 @@ class Question(models.Model):
     class Meta:
         verbose_name = 'Вопрос'
         verbose_name_plural = 'Вопросы'
+
+
+class Answer(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='answer')
+    title = models.CharField(max_length=50, verbose_name='Вариант ответа')
+    is_true = models.BooleanField(default=False, verbose_name='Правильный ответ')
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'Ответ'
+        verbose_name_plural = 'Ответы'
 
 
 class Test(models.Model):

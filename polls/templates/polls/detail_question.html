@@ -4,20 +4,14 @@
     {{ question.title }}
 {% endblock %}
 
-{% block nav_bar_menu %}
-    <li class="nav-item">
-        <a class="nav-link" href="{% url 'create_question' %}">Создать вопрос</a>
-    </li>
-{% endblock %}
 
 {% block content %}
     <div> {{ question.title }} </div>
     <br>
     <div>
-        <p>{{ question.true_answer }}</p>
-        <p>{{ question.option_a }}</p>
-        <p>{{ question.option_b }}</p>
-        <p>{{ question.option_c }}</p>
+        {% for answer in question.answer.all %}
+            <p>{{ answer.title }}</p>
+        {% endfor %}
     </div>
 
     <br>
@@ -32,7 +26,7 @@
         <div class="d-inline-flex bd-highlight">
                 
             <form action="." method="POST">{% csrf_token %}
-                <h3>Вы точно хотите удалить вопрос <br> "{{ question.question_title }}"?</h3>
+                <h3>Вы точно хотите удалить вопрос <br> "{{ question.title }}"?</h3>
                 <br>
                 <button type="button" class="btn btn-outline-primary">Оставить</button>
                 <input class="btn btn-outline-danger" type="submit" value="Удалить">

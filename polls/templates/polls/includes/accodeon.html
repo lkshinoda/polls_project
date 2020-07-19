@@ -12,7 +12,7 @@
 <div class="mt-5">
      <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 
-         {% for test in poll.test.all|shuffle %}
+         {% for test in poll.test.all %}
              <div class="panel panel-default">
                  <div class="panel-heading" role="tab" id="heading{{ test.id }}">
                      <h4 class="panel-title">
@@ -38,35 +38,26 @@
                              </div>
                          </div>
                          <div class="mt=5">
-                             {% for quest in test.question.all %}
+                             {% for quest in test.question.all|shuffle %}
                                  <div class="mt-5">
                                     <div class="shadow p-3 mb-5 bg-white rounded">
                                         <div class="card-body">
                                             <h5 class="card-title">{{ quest.title }}</h5>
                                             <hr>
 
-                                            <p>
-                                                <input type="radio" name="question_{{ quest.id }}" id="choice{{ forloop.counter }}" value="{{ quest.option_a }}">
-                                                <label for="choice{{ forloop.counter }}">&#8195;{{ quest.option_a }}</label><br>
-                                            </p>
-                                            <p>
-                                                <input type="radio" name="question_{{ quest.id }}" id="choice{{ forloop.counter }}" value="option_b">
-                                                <label for="choice{{ forloop.counter }}">&#8195;{{ quest.option_b }}</label><br>
-                                            </p>
-                                            <p>
-                                                <input type="radio" name="question_{{ quest.id }}" id="choice{{ forloop.counter }}" value="option_c">
-                                                <label for="choice{{ forloop.counter }}">&#8195;{{ quest.option_c }}</label><br>
-                                            </p>
-                                            <p>
-                                                <input type="radio" name="question_{{ quest.id }}" id="choice{{ forloop.counter }}" value="true_answer">
-                                                <label for="choice{{ forloop.counter }}">&#8195;{{ quest.true_answer }}</label><br>
-                                            </p>
+                                            {% for answer in quest.answer.all|shuffle %}
+                                                <p>
+                                                    <input type="radio" name="question_{{ quest.id }}" id="choice{{ forloop.counter }}" value="{{ answer.id }}">
+                                                    <label for="choice{{ forloop.counter }}">&#8195;{{ answer.title }}</label><br>
+                                                </p>
+                                            {% endfor %}
+
                                             {% if quest.admin_comment %}
-                                                     <hr>
-                                                    <div class="text-muted">
-                                                        {{ quest.admin_comment }}
-                                                    </div>
-                                                 {% endif %}
+                                                <hr>
+                                                <div class="text-muted">
+                                                    {{ quest.admin_comment }}
+                                                </div>
+                                            {% endif %}
 
                                         </div>
                                      </div>

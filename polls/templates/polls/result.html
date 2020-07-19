@@ -1,9 +1,53 @@
 {% extends "base.html" %}
 
 {% block title %}
-    Results
+    Результаты {{ poll.title }}
 {% endblock %}
 
-{% block body %}
-    <div>results</div>
+{% block content %}
+
+    <div class="mt-4">
+        <div class="shadow p-3 mb-5 bg-white rounded">
+            <div class="card-body">
+                <h4>Результаты теста:</h4>
+                 <hr>
+                <h5 class="card-title">{{ poll.title }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted"></h6>
+                <p class="card-text">{{ poll.description }}</p>
+                <hr>
+                <p>Вы набрали <b>{{ count.true }}</b> баллов из <b>{{ count.total }}</b></p>
+                <p>Верных ответов <b>{{ count.percent }}%</b></p>
+            </div>
+        </div>
+    </div>
+
+        {% for question, data in result.items %}
+
+                {% if data.status %}
+                    <div class="alert alert-success shadow p-3 mb-5 rounded" role="alert">
+                    <h5 class="alert-heading">{{ question }}</h5>
+                      <hr>
+                        <p>
+                            Ваш ответ:
+                        </p>
+                      <p class="mb-0">{{ data.choice.title }}</p>
+                    </div>
+
+                {% else %}
+                     <div class="alert alert-danger shadow p-3 mb-5 rounded" role="alert">
+                        <h5 class="alert-heading">{{ question }}</h5>
+                      <hr>
+                         <p>
+                             Ваш ответ:
+                             {{ data.choice.title }}
+                         </p>
+                         <hr>
+                         Верный ответ:
+                      <p class="mb-0">{{ data.correct.title }}</p>
+                    </div>
+                {% endif %}
+
+
+    {% endfor %}
+
 {% endblock %}

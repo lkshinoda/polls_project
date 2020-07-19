@@ -9,8 +9,8 @@
 
     {% include 'polls/includes/card_template.html' with obj=poll %}
 
-
-    <form method="POST" id="question-form">{% csrf_token %}
+<div class="mb-1">
+    <form method="POST">{% csrf_token %}
 
     <div>
         {% include 'polls/includes/accodeon.html' with poll=poll %}
@@ -18,5 +18,6 @@
 
     <button class="btn btn-primary" type="submit">Отправить ответы</button>
     </form>
+</div>
 
 {% endblock %}

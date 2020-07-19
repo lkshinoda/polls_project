@@ -1,4 +1,4 @@
-from polls.forms import CreateTestForm, CreateQuestionForm, CreatePollForm
+from polls.forms import CreateTestForm, CreatePollForm
 from polls.models import Question, Poll, Test
 from django.views.generic import ListView, DetailView, DeleteView, CreateView, UpdateView, View
 from django.shortcuts import get_object_or_404, render, redirect
@@ -6,6 +6,7 @@ from django.http import JsonResponse
 from polls.services import *
 
 """ Test """
+
 
 class TestListView(ListView):
     title = 'Список тестов'
@@ -19,7 +20,7 @@ class TestDetailView(View):
         template_name = 'polls/detail_test.html'
         context = {'test': test}
         return render(request, template_name, context)
-        
+
     def post(self, request, slug):
         test = Test.objects.get(slug__iexact=slug)
         test.delete()
@@ -92,18 +93,13 @@ class QuestionListView(ListView):
     template_name = 'polls/question_list.html'
 
 
-class QuestionCreateView(CreateView):
-    form_class = CreateQuestionForm
-    template_name = 'polls/create_question.html'
-
-
 class QuestionDetailView(DetailView):
     def get(self, request, pk):
         question = Question.objects.get(id=pk)
         template_name = 'polls/detail_question.html'
         context = {'question': question}
         return render(request, template_name, context)
-        
+
     def post(self, request, pk):
         quest = Question.objects.get(id=pk)
         quest.delete()
@@ -112,7 +108,7 @@ class QuestionDetailView(DetailView):
 
 class QuestionUpdateView(UpdateView):
     model = Question
-    form_class = CreateQuestionForm
+    # form_class = CreateQuestionForm
     template_name = 'polls/update_question.html'
 
 
@@ -175,31 +171,9 @@ class PollDeleteView(DeleteView):
     success_url = '/'
 
 
-class RunTestView(View):
-    def get(self, request, slug):
-        poll = Poll.objects.get(slug__iexact=slug)
-        tests = poll.test.all()
-        quest_list = []
-        for test in tests:
-            questions = test.question.all()
-            for item in questions:
-                quest_list.append(item)
-
-        print(quest_list)
-
-
-        context = {'poll': poll, 'tests': tests}
-        template_name = 'polls/run_test.html'
-        return render(request, template_name, context)
-    def post(self, request, slug):
-        result = request.POST.getlist('tests')
-        data = request.POST
-
-        pass
-
-
 class IndexView(View):
     template_name = 'polls/index.html'
+
     def get(self, request):
         tests = Test.objects.all()
         polls = Poll.objects.all()
@@ -236,35 +210,37 @@ class IndexView(View):
             return JsonResponse(response_data)
 
         return render(request, self.template_name, context)
-    
-def create_question(request):
-    questions = Question.objects.all()
-    response_data = {}
-    context = {'questions': questions}
 
-    if request.POST.get('action') == 'add':
-        title = request.POST.get('title')
-        true_answer = request.POST.get('true_answer')
-        option_a = request.POST.get('option_a')
-        option_b = request.POST.get('option_b')
-        option_c = request.POST.get('option_c')
 
-        response_data['title'] = title
-        response_data['true_answer'] = true_answer
-        response_data['option_a'] = option_a
-        response_data['option_b'] = option_b
-        response_data['option_c'] = option_c
-
-        Question.objects.create(
-            title=title,
-            true_answer=true_answer,
-            option_a=option_a,
-            option_b=option_b,
-            option_c=option_c
-        )
-        return JsonResponse(response_data)
-
-    return render(request, 'polls/test.html', context)
+# #TODO сhange
+# def create_question(request):
+#     questions = Question.objects.all()
+#     response_data = {}
+#     context = {'questions': questions}
+#
+#     if request.POST.get('action') == 'add':
+#         title = request.POST.get('title')
+#         true_answer = request.POST.get('true_answer')
+#         option_a = request.POST.get('option_a')
+#         option_b = request.POST.get('option_b')
+#         option_c = request.POST.get('option_c')
+#
+#         response_data['title'] = title
+#         response_data['true_answer'] = true_answer
+#         response_data['option_a'] = option_a
+#         response_data['option_b'] = option_b
+#         response_data['option_c'] = option_c
+#
+#         Question.objects.create(
+#             title=title,
+#             true_answer=true_answer,
+#             option_a=option_a,
+#             option_b=option_b,
+#             option_c=option_c
+#         )
+#         return JsonResponse(response_data)
+#
+#     return render(request, 'polls/test.html', context)
 
 
 # def create_poll(request):
@@ -288,24 +264,41 @@ def create_question(request):
 #         return JsonResponse(response_data)
 
 #     return render(request, 'polls/create_poll.html', context)
-    
-    
+
+
 class CreateSelfTestView(View):
     def get(self, request):
-        question_form = CreateQuestionForm()
         test_form = CreateTestForm()
         template_name = 'polls/create_test.html'
-        context = {'question_form': question_form, 'test_form': test_form}
+        context = {'test_form': test_form}
         return render(request, template_name, context)
-            
+
     def post(self, request):
         data = request.POST
         save_m2m_data(data)
-        template_name = 'polls/test_list.html'
-
         return redirect('/test/')
-        
+
 
 def AnswerHandler(request):
     pass
+
+
+class RunTestView(View):
+    template_name = 'polls/run_test.html'
+
+    def get(self, request, slug):
+        poll = Poll.objects.get(slug__iexact=slug)
+        tests = poll.test.all()
+        context = {'poll': poll, 'tests': tests}
+        return render(request, self.template_name, context)
+
+    def post(self, request, slug):
+        data = request.POST
+        result, count = answer_handler(data)
+        poll = Poll.objects.get(slug__iexact=slug)
+        context = {'poll': poll, 'result': result, 'count': count}
+        template_name = 'polls/result.html'
+
+        return render(request, template_name, context)
+
 
