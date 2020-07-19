@@ -11,7 +11,7 @@ def gen_slug(s):    # генерация уникального slug в форм
 
 
 class Question(models.Model):
-    question_title = models.TextField(max_length=2000, verbose_name='Текст вопроса')
+    title = models.TextField(max_length=2000, verbose_name='Текст вопроса')
     true_answer = models.CharField(max_length=50, verbose_name='Верный варинат ответа')
     option_a = models.CharField(max_length=50, verbose_name='Второй вариант')
     option_b = models.CharField(max_length=50, verbose_name='Третий вариант')
@@ -24,7 +24,7 @@ class Question(models.Model):
         return reverse('detail_question', kwargs={'pk': self.id})
 
     def __str__(self):
-        return self.question_title
+        return self.title
 
     class Meta:
         verbose_name = 'Вопрос'

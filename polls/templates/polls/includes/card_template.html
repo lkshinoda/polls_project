@@ -1,0 +1,29 @@
+<div class="mt-4">
+    <div class="shadow p-3 mb-5 bg-white rounded">
+        <div class="card-body">
+            <h5 class="card-title">{{ obj.title }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted"></h6>
+            <p class="card-text">{{ obj.description }}</p>
+            {% if slug %}
+                <a href="{% url template slug=obj.slug %}" class="stretched-link"></a>
+            {% endif %}
+
+            {% if id %}
+                <a href="{% url template pk=obj.id %}" class="stretched-link"></a>
+            {% endif %}
+
+            {% if obj.admin_comment %}<hr>
+                <div class="text-muted">
+                    {{ obj.admin_comment }}
+                </div>
+            {% endif %}
+
+            {% for object in relate %}
+                <div class="mt-4">
+                    <li>{{ object.title }}</li>
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</div>

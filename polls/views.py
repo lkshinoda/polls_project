@@ -31,11 +31,52 @@ class TestCreateView(CreateView):
     template_name = 'polls/create_test.html'
 
 
-class TestUpdateView(UpdateView):
-    model = Test
-    form_class = CreateTestForm
-    template_name = 'polls/update_test.html'
+class TestUpdateView(View):
+    def get(self, request, slug):
+        questions = Question.objects.all()
+        test = Test.objects.get(slug__iexact=slug)
+        related_questions = test.question.all()
 
+        related_id = []
+        for quest in questions:
+            if quest in related_questions:
+                related_id.append(quest.id)
+
+        form = CreatePollForm(instance=test)
+        template_name = 'polls/update_test.html'
+        context = {'form': form, 'test': test, 'questions': questions, 'related_id': related_id}
+        return render(request, template_name, context)
+
+    def post(self, request, slug):
+        questions = request.POST.getlist('questions')
+        test = Test.objects.get(slug__iexact=slug)
+        test.question.clear()
+        form = CreateTestForm(request.POST, instance=test)
+
+        for quest_id in questions:
+            question = Question.objects.get(id=quest_id)
+            test.question.add(question)
+
+        if form.is_valid():
+            new_test = form.save()
+            return redirect(new_test)
+
+
+# class TestUpdateView(View):
+#     def get(self, request, slug):
+#         test = Test.objects.get(slug__iexact=slug)
+#         questions = test.question.all()
+#         template_name = 'polls/update_test.html'
+#         form = CreateTestForm(instance=test)
+#         context = {'test': test, 'form': form, 'questions': questions}
+#         return render(request, template_name, context)
+#
+#     def post(self, request, slug):
+#         test = Test.objects.get(slug__iexact=slug)
+#         form = CreateTestForm(request.POST, instance=test)
+#         if form.is_valid():
+#             new_poll = form.save()
+#             return redirect(new_poll)
 
 class TestDeleteView(DeleteView):
     model = Test
@@ -134,31 +175,67 @@ class PollDeleteView(DeleteView):
     success_url = '/'
 
 
-class RunTestView(DetailView):
-    model = Test
-    template_name = 'polls/run_test.html'
+class RunTestView(View):
+    def get(self, request, slug):
+        poll = Poll.objects.get(slug__iexact=slug)
+        tests = poll.test.all()
+        quest_list = []
+        for test in tests:
+            questions = test.question.all()
+            for item in questions:
+                quest_list.append(item)
+
+        print(quest_list)
 
 
-def view_poll(request):
-    tests = Test.objects.all()
-    polls = Poll.objects.all()
-    response_data = {}
-    context = {'polls': polls, 'tests': tests}
+        context = {'poll': poll, 'tests': tests}
+        template_name = 'polls/run_test.html'
+        return render(request, template_name, context)
+    def post(self, request, slug):
+        result = request.POST.getlist('tests')
+        data = request.POST
 
-    if request.POST.get('action') == 'add':
-        title = request.POST.get('title')
-        description = request.POST.get('description')
+        pass
 
-        response_data['title'] = title
-        response_data['description'] = description
 
-        Poll.objects.create(
-            title=title,
-            description=description
-        )
-        return JsonResponse(response_data)
+class IndexView(View):
+    template_name = 'polls/index.html'
+    def get(self, request):
+        tests = Test.objects.all()
+        polls = Poll.objects.all()
+        context = {'polls': polls, 'tests': tests}
 
-    return render(request, 'polls/index.html', context)
+        return render(request, self.template_name, context)
+
+    def post(self, request):
+        tests = Test.objects.all()
+        polls = Poll.objects.all()
+        response_data = {}
+        context = {'polls': polls, 'tests': tests}
+
+        if request.POST.get('action') == 'add':
+            tests = request.POST.getlist('tests[]')
+            title = request.POST.get('title')
+            description = request.POST.get('description')
+
+            response_data['title'] = title
+            response_data['description'] = description
+
+            poll = Poll(
+                title=title,
+                description=description
+            )
+            poll.save()
+
+            response_data['slug'] = poll.slug
+
+            for test_id in tests:
+                test = Test.objects.get(id=test_id)
+                poll.test.add(test)
+
+            return JsonResponse(response_data)
+
+        return render(request, self.template_name, context)
     
 def create_question(request):
     questions = Question.objects.all()

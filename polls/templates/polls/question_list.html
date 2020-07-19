@@ -14,7 +14,7 @@
 
     <div>
         {% for object in object_list %}
-            <p><a href="{% url 'detail_question' pk=object.id %}">{{ object.question_title }}</a></p>
+            <p><a href="{% url 'detail_question' pk=object.id %}">{{ object.title }}</a></p>
         {% endfor %}
     </div>
 

@@ -4,29 +4,28 @@
     Главная
 {% endblock %}
 
-{% block nav_bar_menu %}
 
+    {% block nav_bar_menu %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'test_list' %}">Тесты</a>
+        </li>
 
-    <li class="nav-item">
-        <a class="nav-link " href=" {% url 'test_list' %} "  role="button" >
-            Тесты
-        </a>
-    </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'list_question' %}">Вопросы</a>
+        </li>
+    {% endblock %}
 
+    {% block create_test_button %}
+            <a class="btn btn-primary" role="butt" href="{% url 'create_test' %}">Создать тест</a>
+    {% endblock %}
 
-    <li class="nav-item">
-        <a class="nav-link " href=" {% url 'list_question' %} "  role="button" >
-            Вопросы
-        </a>
-    </li>
-
-{% endblock %}
 
     {% block content %}
         {% block format_content %}
 
 
-            
+
+
                 <div class="container pt-5">
                     <div class='mt-4'>
                         <div class="row mb-2 polls">
@@ -61,9 +60,10 @@
                                 Добавить тесты к опросу
                                 <div>
 
-                                    <select id="multiple" multiple="multiple">
+                                    <label for="tests"></label>
+                                    <select id="tests" multiple class="form-control" name="tests[]">
                                         {% for test in tests %}
-                                            <option id="{{ test.id }}">{{ test.title }}</option>
+                                                <option value="{{ test.id }}">{{ test.title }}</option>
                                         {% endfor %}
                                     </select>
 
@@ -95,6 +95,7 @@
                     title: $('#title').val(),
                     description: $('#description').val(),
                     csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                    tests: $('#tests').val(),
                     action: 'add'
 
                 },

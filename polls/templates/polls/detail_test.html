@@ -5,30 +5,18 @@
 {% endblock %}
 
 {% block nav_bar_menu %}
-    <li class="nav-item">
-        <a class="nav-link" href="{% url 'create_question' %}">Создать вопрос</a>
-    </li>
 
-    <li class="nav-item">
-        <a class="nav-link" href="{% url 'list_question' %}">Все вопросы</a>
-    </li>
 {% endblock %}
 
 {% block content %}
 
-    <br>
-    <br>
-    <div> {{ test.title }} </div>
-    <br>
-    <div>{{ test.description }}</div>
+{% include 'polls/includes/card_template.html' with obj=test relate=test.question.all %}
 
-    <br>
-    <br>
-
-    <a class="btn btn-primary" href="{% url 'run_test' slug=test.slug %}" role="button">Пройти тест</a>
-
-    <a class="btn btn-outline-primary" href="{% url 'update_test' slug=test.slug %}" role="button">Изменить</a>
-    <button type="button" class="btn btn-outline-danger">Удалить</button>
+    <div class="mt-4">
+        <a class="btn btn-primary" href="{% url 'run_test' slug=test.slug %}" role="button">Пройти тест</a>
+        <a class="btn btn-outline-primary" href="{% url 'update_test' slug=test.slug %}" role="button">Изменить</a>
+        <button type="button" class="btn btn-outline-danger">Удалить</button>
+    </div>
 
 
 

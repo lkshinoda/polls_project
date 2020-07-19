@@ -26,22 +26,17 @@
                     <a class="navbar-brand" href="{% url 'home' %}">Polls project</a>
                     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                         <li class="nav-item active">
-                            <a class="nav-link" href="{% url 'home' %}">Домой <span class="sr-only">(current)</span></a>
+                            {% block nav_bar_menu %}
+                            {% endblock %}
                         </li>
-                        
-                        <li class="nav-item active">
-                            <a class="nav-link" href="{% url 'create_test' %}">Создать свой тест <span class="sr-only">(current)</span></a>
-                        </li>
-                        
-                        {% block nav_bar_menu %}
-                        {% endblock %}
-                        
                     </ul>
+                        {% block create_test_button %}
+                        {% endblock %}
                 </div>
             </nav>
-            
+
         {% endblock %}
-        
+
         {% block format_content %}
         
             <div class="container" mt-5>

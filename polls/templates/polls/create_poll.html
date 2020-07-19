@@ -1,8 +1,8 @@
-{% extends "base.html" %}
-
 {% block title %}
     Создать опрос
 {% endblock %}
+
+{% include 'polls/includes/menu.html' %}
 
 {% block content %}
     <form method="POST" action="">
@@ -19,4 +19,3 @@
 
         <button type="submit" class="btn btn-primary">Создать</button>
     </form>
-{% endblock %}

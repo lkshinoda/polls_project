@@ -17,7 +17,7 @@
                                 <div class="col-md-9">
                                     <div class="shadow p-3 mb-5 bg-white rounded">
                                         <div class="col p-3 d-flex flex-column position-static">
-                                            <h3 class="mb-3">{{question.question_title}}</h3>
+                                            <h3 class="mb-3">{{question.title}}</h3>
                                             <li class="mb-auto">{{question.true_answer}}</li>
                                             <li class="mb-auto">{{question.option_a}}</li>
                                             <li class="mb-auto">{{question.option_b}}</li>
@@ -39,7 +39,7 @@
                                 
                             <form method="POST" id="question-form">{% csrf_token %}
                                 <div class="form-group">
-                                    <textarea class="form-control" id="question_title" placeholder="Вопрос"></textarea>
+                                    <textarea class="form-control" id="title" placeholder="Вопрос"></textarea>
                                 </div>
                                 <div class="form-group">
                                     <input type="text" class="form-control" id="true_answer" placeholder="Правильный ответ">

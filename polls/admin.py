@@ -16,7 +16,7 @@ class PollPageAdmin(admin.ModelAdmin):
     
 
 class QuestionPageAdmin(admin.ModelAdmin):
-    list_display = ['question_title']
+    list_display = ['title']
 
 
 admin.site.register(Poll, PollPageAdmin)

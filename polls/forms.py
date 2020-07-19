@@ -19,7 +19,7 @@ class CreateQuestionForm(ModelForm):
 
     def __init__(self, *args, **kwargs): # переопределение конструктора с целью передачи стиля для каждого из полей
         super().__init__(*args, **kwargs)
-        self.fields['question_title'].widget.attrs.update({'class': 'form-control', 'name': 'question_1'})
+        self.fields['title'].widget.attrs.update({'class': 'form-control', 'name': 'question_1'})
         self.fields['option_a'].widget.attrs.update({'class': 'form-control', 'name': 'optiona_1'})
         self.fields['option_b'].widget.attrs.update({'class': 'form-control', 'name': 'optionb_1'})
         self.fields['option_c'].widget.attrs.update({'class': 'form-control', 'name': 'optionc_1'})
@@ -27,7 +27,7 @@ class CreateQuestionForm(ModelForm):
 
     class Meta:
         model = Question
-        fields = ['question_title', 'option_a', 'option_b', 'option_c', 'true_answer']
+        fields = ['title', 'option_a', 'option_b', 'option_c', 'true_answer']
 
 
 class CreatePollForm(ModelForm):

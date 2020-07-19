@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-    {{ question.question_title }}
+    {{ question.title }}
 {% endblock %}
 
 {% block nav_bar_menu %}
@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block content %}
-    <div> {{ question.question_title }} </div>
+    <div> {{ question.title }} </div>
     <br>
     <div>
         <p>{{ question.true_answer }}</p>

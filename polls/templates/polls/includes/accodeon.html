@@ -1,0 +1,82 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+{% load shuffle %}
+
+<style>
+    {% include 'polls/includes/accordeon.css' %}
+</style>
+
+<div class="mt-5">
+     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+         {% for test in poll.test.all|shuffle %}
+             <div class="panel panel-default">
+                 <div class="panel-heading" role="tab" id="heading{{ test.id }}">
+                     <h4 class="panel-title">
+                         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ test.id }}" aria-expanded="false" aria-controls="collapse{{ test.id }}">
+                             {{ test.title }}
+                         </a>
+                     </h4>
+                 </div>
+                 <div id="collapse{{ test.id }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{ test.id }}">
+                     <div class="panel-body">
+                         <div class="mt-4">
+                             <div class="shadow p-3 mb-5 bg-white rounded">
+                                 <div class="card-body">
+                                     <h6 class="card-subtitle mb-2 text-muted"></h6>
+                                     <h5 class="card-title">{{ test.description }}</h5>
+                                         {% if test.admin_comment %}
+                                             <hr>
+                                            <div class="text-muted">
+                                                {{ test.admin_comment }}
+                                            </div>
+                                         {% endif %}
+                                 </div>
+                             </div>
+                         </div>
+                         <div class="mt=5">
+                             {% for quest in test.question.all %}
+                                 <div class="mt-5">
+                                    <div class="shadow p-3 mb-5 bg-white rounded">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ quest.title }}</h5>
+                                            <hr>
+
+                                            <p>
+                                                <input type="radio" name="question_{{ quest.id }}" id="choice{{ forloop.counter }}" value="{{ quest.option_a }}">
+                                                <label for="choice{{ forloop.counter }}">&#8195;{{ quest.option_a }}</label><br>
+                                            </p>
+                                            <p>
+                                                <input type="radio" name="question_{{ quest.id }}" id="choice{{ forloop.counter }}" value="option_b">
+                                                <label for="choice{{ forloop.counter }}">&#8195;{{ quest.option_b }}</label><br>
+                                            </p>
+                                            <p>
+                                                <input type="radio" name="question_{{ quest.id }}" id="choice{{ forloop.counter }}" value="option_c">
+                                                <label for="choice{{ forloop.counter }}">&#8195;{{ quest.option_c }}</label><br>
+                                            </p>
+                                            <p>
+                                                <input type="radio" name="question_{{ quest.id }}" id="choice{{ forloop.counter }}" value="true_answer">
+                                                <label for="choice{{ forloop.counter }}">&#8195;{{ quest.true_answer }}</label><br>
+                                            </p>
+                                            {% if quest.admin_comment %}
+                                                     <hr>
+                                                    <div class="text-muted">
+                                                        {{ quest.admin_comment }}
+                                                    </div>
+                                                 {% endif %}
+
+                                        </div>
+                                     </div>
+                                 </div>
+                             {% endfor %}
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         {% endfor %}
+    </div>
+</div>
+
