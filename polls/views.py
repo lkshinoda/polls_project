@@ -63,21 +63,6 @@ class TestUpdateView(View):
             return redirect(new_test)
 
 
-# class TestUpdateView(View):
-#     def get(self, request, slug):
-#         test = Test.objects.get(slug__iexact=slug)
-#         questions = test.question.all()
-#         template_name = 'polls/update_test.html'
-#         form = CreateTestForm(instance=test)
-#         context = {'test': test, 'form': form, 'questions': questions}
-#         return render(request, template_name, context)
-#
-#     def post(self, request, slug):
-#         test = Test.objects.get(slug__iexact=slug)
-#         form = CreateTestForm(request.POST, instance=test)
-#         if form.is_valid():
-#             new_poll = form.save()
-#             return redirect(new_poll)
 
 class TestDeleteView(DeleteView):
     model = Test
@@ -212,58 +197,6 @@ class IndexView(View):
         return render(request, self.template_name, context)
 
 
-# #TODO сhange
-# def create_question(request):
-#     questions = Question.objects.all()
-#     response_data = {}
-#     context = {'questions': questions}
-#
-#     if request.POST.get('action') == 'add':
-#         title = request.POST.get('title')
-#         true_answer = request.POST.get('true_answer')
-#         option_a = request.POST.get('option_a')
-#         option_b = request.POST.get('option_b')
-#         option_c = request.POST.get('option_c')
-#
-#         response_data['title'] = title
-#         response_data['true_answer'] = true_answer
-#         response_data['option_a'] = option_a
-#         response_data['option_b'] = option_b
-#         response_data['option_c'] = option_c
-#
-#         Question.objects.create(
-#             title=title,
-#             true_answer=true_answer,
-#             option_a=option_a,
-#             option_b=option_b,
-#             option_c=option_c
-#         )
-#         return JsonResponse(response_data)
-#
-#     return render(request, 'polls/test.html', context)
-
-
-# def create_poll(request):
-#     question_form = CreateQuestionForm(instance=Question)
-#     tests = Test.objects.all()
-#     polls = Poll.objects.all()
-#     response_data = {}
-#     context = {'polls': polls, 'tests': tests}
-
-#     if request.POST.get('action') == 'add':
-#         title = request.POST.get('title')
-#         description = request.POST.get('description')
-
-#         response_data['title'] = title
-#         response_data['description'] = description
-
-#         Poll.objects.create(
-#             title=title,
-#             description=description
-#         )
-#         return JsonResponse(response_data)
-
-#     return render(request, 'polls/create_poll.html', context)
 
 
 class CreateSelfTestView(View):
